@@ -9,7 +9,24 @@ function closeModal() {
 }
 
 
-//
+//FORM
+
+//variables from DOM
+const first = document.getElementById('first');
+const last = document.getElementById('last');
+const email = document.getElementById('email');
+const message = document.getElementById('message');
+
+
+
+const form = document.querySelector('form');
+
+form.addEventListener('keydown', e => { //prevents enter key from submitting the form
+    if (e.key === 'Enter' && e.target.nodeName !== 'TEXTAREA') {
+        e.preventDefault();
+    }
+});
+
 
 
 
@@ -47,12 +64,12 @@ const isValidFirst = /^[a-zA-Z'-À-ÿ]+[^0-9@?#]+$/;
 const isValidLast = /^[a-zA-Z'-À-ÿ]+[^0-9@?#]+$/;
 const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
 const validateInputs = () => { //on utilise trim pour enlever les espaces superflus
     const firstValue = first.value.trim();
     const lastValue = last.value.trim();
     const emailValue = email.value.trim();
-    //const birthdateValue = birthdate.value.trim();
-    const quantityValue = quantity.value.trim();
+    const messageValue = message.value.trim();
   
     // Prénom
     if (firstValue.length <= 1) {
@@ -82,30 +99,17 @@ const validateInputs = () => { //on utilise trim pour enlever les espaces superf
       
     } else {
       setSuccess(email);      
-      //setError(email, ''); //reset du message d'erreur
       emailValidate = true;
     }
   
   
-  
-    // Date de naissance
-  
-   
-    let birthdateInput = document.getElementById('birthdate');
-    let enteredDate = birthdateInput.value.replace(/\D/g, ''); // Remove non-numeric characters;
-    let regexDate = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$|^\d{8}$/;
-  
-    if (!regexDate.test(enteredDate)) {
-      setError(birthdate, 'La date n\'est pas valide');
-    } else {
-      setSuccess(birthdate);
-      birthdateValidate = true;
+     // Message
+    if (messageValue.length === 0) {
+        setError(message, 'Veuillez indiquer le motif de voter message');
+    }  else {
+        setSuccess(message);      
+        messageValidate = true;
     }
-  
-  
-  
-    
-  
   
   
   
@@ -120,7 +124,7 @@ const validateInputs = () => { //on utilise trim pour enlever les espaces superf
       closeModal();
       
     } else {
-      console.log('erreur validation');
+      console.log('error form validation');
     }
   
   

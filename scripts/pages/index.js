@@ -4,6 +4,8 @@
         try {
             const response = await fetch('Data/photographers.json'); 
             const data = await response.json();
+
+            console.log(data);
     
             // fetch photographers's data under the "photographers" key in the JSON file
             const photographers = data.photographers;

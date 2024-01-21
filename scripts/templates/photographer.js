@@ -19,7 +19,7 @@
 function photographerTemplate(data) {
     const { name, portrait, city, country, tagline, price } = data;
 
-    const picture = `assets/photographers/${portrait}`;
+    //const picture = `assets/photographers/${portrait}`;
 
     function createPhotographerArticle() {
         return document.createElement('article');
@@ -59,8 +59,10 @@ function photographerTemplate(data) {
         return pPrice;
     }
 
-    function getUserCardDOM(data) {
-        const { name, portrait, city, country, tagline, price } = data;
+
+
+    function getUserCardDOM() {
+        
 
         const article = createPhotographerArticle();
         const img = createPhotographerImage(`assets/photographers/${portrait}`);
@@ -78,28 +80,49 @@ function photographerTemplate(data) {
         return article;
     }
 
-    function getUserPhoto(picture) {
-        
-    }
+    return { getUserCardDOM }; 
 
-    function getUserDetails(name, city, country, tagline) {
+    // function getUserPhoto(picture) {
         
-    }
+    // }
+
+    // function getUserDetails(name, city, country, tagline) {
+        
+    // }
 
     
 }
 
-// Example usage:
-const photographerData = {
-    name: "Mimi Keel",
-    portrait: "MimiKeel.jpg",
-    city: "London",
-    country: "UK",
-    tagline: "Voir le beau dans le quotidien",
-    price: 400,
-};
+//Extract Photographer's name from the url
+const urlSearchParams = new URLSearchParams(window.location.search);
+const photographerName = urlSearchParams.get('name');
 
-photographerTemplate(photographerData);
+
+//find the corresponding data in the photographers array
+const photographerData = photographers.find(photographer => photographer.name === photographerName);
+
+
+if (photographerData) {
+    const photographer = photographerTemplate(photographerData);
+    const userDetails = photographer.getUserCardDOM();
+    // Append userDetails to the .userDetails div
+    document.querySelector('.userDetails').appendChild(userDetails);
+} else {
+    console.error('Photographer not found in the data');
+}
+
+
+
+
+
+
+
+// const photographerInstance = photographerTemplate(photographerData);
+
+// const userCardDOM = photographerInstance.getUserCardDOM();
+
+
+
 
 
 
@@ -177,9 +200,7 @@ photographerTemplate(photographerData);
 
 
 
-// //Extract Photographer's name from the url
-// const urlSearchParams = new URLSearchParams(window.location.search);
-// const photographerName = urlSearchParams.get('name');
+
 
 
 
