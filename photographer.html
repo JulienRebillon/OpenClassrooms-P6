@@ -9,7 +9,9 @@
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" alt="FishEye logo"/>
+      <a href="index.html">
+        <img src="assets/images/logo.png" class="logo" alt="FishEye logo"/>
+      </a>
     </header>
     <main id="main">
       <div class="photograph-header">
@@ -22,7 +24,17 @@
 
       </div>
 
-      <div class="filter"></div>
+      <div class="filter">
+        <label for="sortDropdown">Trier Par</label>
+        <select id="sortDropdown">
+            <option value="date">Date</option>
+            <option value="popularity">Popularité</option>
+            <option value="title">Titre</option>
+        </select>
+        <div id="sortDate" class="sort-button" onclick="sortPhotos('date')">Date</div>
+        <div id="sortPopularity" class="sort-button" onclick="sortPhotos('popularity')">Popularité</div>
+        <div id="sortTitle" class="sort-button" onclick="sortPhotos('title')">Titre</div>
+    </div>
 
       <section class="album"></section>
 
@@ -63,8 +75,9 @@
 			</div>
 		</div>
 
-    <div id="lightbox">
-      
+    <div class="lightbox">
+
+      <div class="lightbox-close"></div>
       <div class="arrowLeft"></div>
       <div class="arrowRight"></div>
 
