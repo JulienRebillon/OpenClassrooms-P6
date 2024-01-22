@@ -6,6 +6,11 @@
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .contact_button {
@@ -47,6 +52,33 @@
     font-weight: normal;
     text-align: center;
 }
+
+.userPhoto img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+
+.userDetails h2 {
+    color: #D3573C;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.userDetails h3 {
+    color: #D3573C;
+    font-size: 18px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+
+
+
+
+/* FORM */
 
 form {
     display: flex;

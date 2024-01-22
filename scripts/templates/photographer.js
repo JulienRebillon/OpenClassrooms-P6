@@ -83,15 +83,17 @@ function photographerTemplate(data) {
     return { getUserCardDOM }; 
 
     // function getUserPhoto(picture) {
-        
-    // }
-
-    // function getUserDetails(name, city, country, tagline) {
-        
-    // }
+      
 
     
 }
+
+
+
+
+
+
+
 
 //Extract Photographer's name from the url
 const urlSearchParams = new URLSearchParams(window.location.search);
