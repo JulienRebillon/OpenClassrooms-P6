@@ -21,11 +21,11 @@ const message = document.getElementById('message');
 
 const form = document.querySelector('form');
 
-form.addEventListener('keydown', e => { //prevents enter key from submitting the form
-    if (e.key === 'Enter' && e.target.nodeName !== 'TEXTAREA') {
-        e.preventDefault();
-    }
-});
+// form.addEventListener('keydown', e => { //prevents enter key from submitting the form
+//     if (e.key === 'Enter' && e.target.nodeName !== 'TEXTAREA') {
+//         e.preventDefault();
+//     }
+// });
 
 
 

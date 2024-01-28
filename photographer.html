@@ -11,6 +11,7 @@
     <header>
       <a href="index.html">
         <img src="assets/images/logo.png" class="logo" alt="FishEye logo"/>
+        <span class="sr-only">Retour à la plage d'acceuil</span>
       </a>
     </header>
     <main id="main">
@@ -18,7 +19,7 @@
 
         <div class="userDetails"></div>
 
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()" role="button" tabindex="0">Contactez-moi</button>
 
         <div class="userPhoto"></div>
 
@@ -26,7 +27,7 @@
 
       <div class="filter">
         <label for="sortDropdown">Trier Par</label>
-        <select id="sortDropdown">
+        <select id="sortDropdown" aria-labelledby="sortDropdown">
             <option value="date">Date</option>
             <option value="popularity">Popularité</option>
             <option value="title">Titre</option>
@@ -46,46 +47,48 @@
 			<div class="modal">
 				<header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <img src="assets/icons/close.svg" onclick="closeModal()" alt="Close"/>
         </header>
 				<form>
 					<div>
 						<label>Prénom</label>
-						<input type="text" id="first" name="first"/>
-            <div class="error"></div>
+						<input type="text" id="first" name="first" aria-describedby="firstError"/>
+            <div class="error" id="firstError"></div>
 					</div>
           <div>
 						<label>Nom</label>
-						<input type="text" id="last" name="last"/>
-            <div class="error"></div>
+						<input type="text" id="last" name="last" aria-describedby="lastError"/>
+            <div class="error" id="lastError"></div>
 					</div>
           <div>
 						<label>Email</label>
-						<input type="text" id="email" name="email"/>
-            <div class="error"></div>
+						<input type="text" id="email" name="email" aria-describedby="emailError"/>
+            <div class="error" id="emailError"></div>
 					</div>
           <div>
 						<label>Votre message</label>
-              <textarea rows="4" id="message" name="message"></textarea>
-              <div class="error"></div>
+              <textarea rows="4" id="message" name="message" aria-describedby="messageError"></textarea>
+              <div class="error" id="messageError"></div>
 					</div>
 
-          <button class="contact_button">Envoyer</button>
+          <button class="contact_button" aria-label="Envoyer le message">Envoyer</button>
 				</form>
 			</div>
 		</div>
 
     <div class="lightbox">
 
-      <div class="lightbox-close"></div>
-      <div class="arrowLeft"></div>
-      <div class="arrowRight"></div>
+      <div class="lightbox-close" role="button" tabindex="0" aria-label="Close Lightbox"></div>
+      <div class="arrowLeft" role="button" tabindex="0" aria-label="Previous Image"></div>
+      <div class="arrowRight" role="button" tabindex="0" aria-label="Next Image"></div>
 
     </div>
 
+    <script src="/scripts/pages/keyboard.js"></script>
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/templates/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
+    <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/pages/index.js"></script>
 
   </body>

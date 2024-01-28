@@ -73,6 +73,10 @@
     margin-bottom: 0px;
 }
 
+.sr-only {
+    display: none;
+}
+
 /* FILTER */
 
 .filter {
@@ -150,5 +154,6 @@ form input {
     width: 360px;
     background: #DB8876;
     z-index: 2;
+    padding-left: 20px;
 
 }

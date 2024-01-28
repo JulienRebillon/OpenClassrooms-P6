@@ -97,6 +97,7 @@ function mapPhotographerFolderName(photographerName) {
     return mappedFolderName || photographerName;
 }
 
+
 let photos = []; // Declare photos globally
 let sortOrder = {
     date: 'desc', // Default sort order for date
