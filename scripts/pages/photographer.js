@@ -39,6 +39,8 @@ function createPhotographerImage(picture) {
     return img;
 }
 
+let currentSortCriteria = 'date';
+
 // Fetch
 function displayUserPhoto(portrait) {
     const userPhotoDiv = document.querySelector('.userPhoto');
@@ -46,8 +48,8 @@ function displayUserPhoto(portrait) {
     userPhotoDiv.appendChild(userPhotoImg);
 }
 
-function createPhotoFigure(photoData) {
-    const { title, image, video, likes } = photoData;
+function createPhotoFigure(photoData, folderName) {
+    const { title, image, video, likes, date, price } = photoData;
 
     // Create figure element
     const figure = document.createElement('figure');
@@ -57,25 +59,42 @@ function createPhotoFigure(photoData) {
         ? document.createElement('video')
         : document.createElement('img');
 
-    // Update the image source path to include the photographer's folder
-    mediaElement.src = video ? `assets/media/${video}` : `assets/images/${photographerName}/${image}`;
+    // Update the media source path to include the photographer's folder
+    mediaElement.src = video ? `assets/media/${folderName}/${video}` : `assets/images/${folderName}/${image}`;
     mediaElement.alt = title;
 
     // Create title element
     const titleElement = document.createElement('figcaption');
     titleElement.textContent = title;
 
-    // Create likes element with Font Awesome heart icon
-    const likesElement = document.createElement('p');
-    likesElement.innerHTML = `<i class="fas fa-heart"></i> ${likes}`;
+    // Create details element based on sort criteria
+    let detailsElement;
+
+    switch (currentSortCriteria) {
+        case 'date':
+            detailsElement = document.createElement('p');
+            detailsElement.textContent = new Date(date).toLocaleDateString();
+            break;
+        case 'likes':
+            detailsElement = document.createElement('p');
+            detailsElement.textContent = `${likes} Likes`;
+            break;
+        case 'price':
+            detailsElement = document.createElement('p');
+            detailsElement.textContent = `${price}€`;
+            break;
+        default:
+            break;
+    }
 
     // Append elements to figure
     figure.appendChild(mediaElement);
     figure.appendChild(titleElement);
-    figure.appendChild(likesElement);
+    figure.appendChild(detailsElement);
 
     return figure;
 }
+
 
 
 function mapPhotographerFolderName(photographerName) {
@@ -98,7 +117,18 @@ function mapPhotographerFolderName(photographerName) {
 }
 
 
-let photos = []; // Declare photos globally
+// Function to update UI with sorted photos
+function displaySortedPhotos(sortedPhotos, folderName) {
+    const albumSection = document.querySelector('.album');
+    albumSection.innerHTML = ''; // Clear existing content
+
+    sortedPhotos.forEach((photo) => {
+        const photoFigure = createPhotoFigure(photo, folderName);
+        albumSection.appendChild(photoFigure);
+    });
+}
+
+//let photos = []; // Declare photos globally
 let sortOrder = {
     date: 'desc', // Default sort order for date
     popularity: 'desc', // Default sort order for popularity
@@ -107,76 +137,55 @@ let sortOrder = {
 
 // Function to toggle sort order
 function toggleSortOrder(criteria) {
-    sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+    if (currentSortCriteria === criteria) {
+        // If the same criteria is clicked again, toggle between 'asc' and 'desc'
+        sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+    } else {
+        // If a new criteria is clicked, set it to 'asc'
+        currentSortCriteria = criteria;
+        sortOrder[criteria] = 'asc';
+    }
 }
+
+
 
 // Function to sort photos based on the selected criteria
-function sortPhotos(criteria) {
-    toggleSortOrder(criteria); // Toggle sort order
+function sortPhotos(criteria, media) {
+    toggleSortOrder(criteria);
 
-    switch (criteria) {
-        case 'date':
-            photos.sort((a, b) => {
-                const orderFactor = sortOrder.date === 'asc' ? 1 : -1;
-                return orderFactor * (new Date(b.date) - new Date(a.date));
-            });
-            break;
-        case 'popularity':
-            photos.sort((a, b) => {
-                const orderFactor = sortOrder.popularity === 'asc' ? 1 : -1;
-                return orderFactor * (b.likes - a.likes);
-            });
-            break;
-        case 'title':
-            photos.sort((a, b) => {
-                const orderFactor = sortOrder.title === 'asc' ? 1 : -1;
-                return orderFactor * a.title.localeCompare(b.title);
-            });
-            break;
-        default:
-            break;
-    }
+    // Sort the photos based on the selected criteria
+    const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+        .sort((a, b) => {
+            switch (currentSortCriteria) {
+                case 'date':
+                    return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+                case 'likes':
+                    return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+                case 'price':
+                    return sortOrder.price === 'asc' ? a.price - b.price : b.price - a.price;
+                default:
+                    return 0;
+            }
+        });
 
-    // Call a function to display sorted photos in the album
-    displaySortedPhotos(photos);
-    updateSortIndicators();
-}
-
-// Function to update UI with sort indicators
-function updateSortIndicators() {
-    const sortIndicators = document.querySelectorAll('.sort-indicator');
-    sortIndicators.forEach((indicator) => indicator.remove()); // Clear existing indicators
-
-    Object.keys(sortOrder).forEach((criteria) => {
-        const order = sortOrder[criteria];
-        const indicator = document.createElement('span');
-        indicator.classList.add('sort-indicator');
-        indicator.textContent = order === 'asc' ? '▲' : '▼';
-
-        const sortButton = document.querySelector(`#sort-${criteria}`);
-        sortButton.appendChild(indicator);
-    });
+    // Display the sorted photos
+    displaySortedPhotos(sortedPhotos, folderName);
 }
 
 
-// Function to display sorted photos in the album
-function displaySortedPhotos(sortedPhotos) {
-    const albumSection = document.querySelector('.album');
-    albumSection.innerHTML = ''; // Clear existing content
-
-    sortedPhotos.forEach((photo) => {
-        const folderName = mapPhotographerFolderName(photographerData.name);
-        const photoFigure = createPhotoFigure(photo, folderName);
-        albumSection.appendChild(photoFigure);
-    });
-}
 
 // Event listener for dropdown change
 const sortDropdown = document.getElementById('sortDropdown');
 sortDropdown.addEventListener('change', function () {
     const selectedOption = this.value;
-    sortPhotos(selectedOption);
+    sortPhotos(selectedOption, media); // Pass the 'media' array to the function
 });
+
+
+
+
+
+
 
 
 // Functions to add total likes in bottom-right corner
