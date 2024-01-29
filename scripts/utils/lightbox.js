@@ -1,6 +1,12 @@
-function displayLightbox() {
-    const modal = document.getElementById("lightbox");
-	lightbox.style.display = "block";
+function displayLightbox(index) {
+    currentImageIndex = index;
+    showImage(currentImageIndex);
+    lightbox.style.display = 'block';
+
+    // Event listeners for navigation
+    document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    document.querySelector('.arrowLeft').addEventListener('click', showPreviousImage);
+    document.querySelector('.arrowRight').addEventListener('click', showNextImage);
 }
 
 function closeLightbox() {
@@ -10,9 +16,17 @@ function closeLightbox() {
 
 
 function showPreviousImage() {
-    // Your code to show the previous image in the lightbox
+    currentImageIndex = (currentImageIndex - 1 + lightboxFigures.length) % lightboxFigures.length;
+    showImage(currentImageIndex);
 }
 
 function showNextImage() {
-    // Your code to show the next image in the lightbox
+    currentImageIndex = (currentImageIndex + 1) % lightboxFigures.length;
+    showImage(currentImageIndex);
+}
+
+function showImage(index) {
+    lightboxFigures.forEach((figure, i) => {
+        figure.style.display = i === index ? 'block' : 'none';
+    });
 }
