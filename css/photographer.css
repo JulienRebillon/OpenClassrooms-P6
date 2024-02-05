@@ -87,6 +87,10 @@ body {
     display: none;
 }
 
+.photographer_section {
+    display: none;
+}
+
 /* FILTER */
 
 .filter {

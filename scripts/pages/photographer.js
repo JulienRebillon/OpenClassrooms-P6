@@ -195,8 +195,8 @@ function sortPhotos(criteria, media) {
                     return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
                 case 'likes':
                     return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-                case 'price':
-                    return sortOrder.price === 'asc' ? a.price - b.price : b.price - a.price;
+                    case 'title':
+                        return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
                 default:
                     return 0;
             }
@@ -310,5 +310,4 @@ async function init() {
 }
 
 init();
-
 
