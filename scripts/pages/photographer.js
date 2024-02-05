@@ -72,7 +72,7 @@ function displayUserPhoto(portrait) {
 
 
 function createPhotoFigure(photoData, folderName) {
-    const { title, image, video, likes, date, price } = photoData;
+    const { title, image, video, likes, date } = photoData;
 
     // Create figure element
     const figure = document.createElement('figure');
@@ -84,7 +84,7 @@ function createPhotoFigure(photoData, folderName) {
 
     // Update the media source path to include the photographer's folder
     mediaElement.src = video ? `assets/media/${folderName}/${video}` : `assets/images/${folderName}/${image}`;
-    mediaElement.alt = title;
+    mediaElement.alt = title; // Use the title as alt description
 
     // Create title element
     const titleElement = document.createElement('figcaption');
@@ -102,9 +102,9 @@ function createPhotoFigure(photoData, folderName) {
             detailsElement = document.createElement('p');
             detailsElement.textContent = `${likes} Likes`;
             break;
-        case 'price':
+        case 'title':
             detailsElement = document.createElement('p');
-            detailsElement.textContent = `${price}€`;
+            detailsElement.textContent = title; 
             break;
         default:
             break;
@@ -281,6 +281,7 @@ async function init() {
 
             // Display the picture in the .userPhoto div
             displayUserPhoto(photographerData.portrait);
+            
 
             // Display the photos in the .album section
             const albumSection = document.querySelector('.album');
@@ -293,7 +294,7 @@ async function init() {
                 });
 
             // Calculate and display total likes
-            const totalLikes = calculateTotalLikes(media);
+            const totalLikes = calculateTotalLikes(media, photographerData.id);
             const photographerPrice = photographerData.price; // Assuming photographerData has a 'price' property
             displayTotalLikes(totalLikes, photographerPrice);
 
@@ -301,8 +302,12 @@ async function init() {
             console.error('Photographer not found in the data');
         }
 
+        // After getting photographers' data, add this line to hide the photographer_section
+        const photographerSection = document.querySelector('.photographer_section');
+        photographerSection.style.display = 'none';
+
         // Display other data
-        displayData(photographers);
+        //displayData(photographers);
     } catch (error) {
         console.error('Error initializing the page', error);
         // Handle initialization error, e.g., display an error message on the page
