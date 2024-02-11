@@ -8,7 +8,7 @@
             console.log(data);
     
             // fetch photographers's data under the "photographers" key in the JSON file
-            const photographers = data.photographers;
+            let photographers = data.photographers;
     
             return { photographers };
         } catch (error) {

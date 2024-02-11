@@ -1,5 +1,7 @@
 //Mettre le code JavaScript lié à la page photographer.html
-let photographers;
+//let photographers = data.photographers;
+
+
 
 async function getPhotographers() {
     try {
@@ -71,6 +73,61 @@ function displayUserPhoto(portrait) {
 
 
 
+// function createPhotoFigure(photoData, folderName) {
+//     const { title, image, video, likes, date } = photoData;
+
+//     // Create figure element
+//     const figure = document.createElement('figure');
+
+//     // Create media element (image or video)
+//     const mediaElement = video
+//         ? document.createElement('video')
+//         : document.createElement('img');
+
+//     // Update the media source path to include the photographer's folder
+//     mediaElement.src = video ? `assets/media/${folderName}/${video}` : `assets/images/${folderName}/${image}`;
+//     mediaElement.alt = title; // Use the title as alt description
+
+//     // Create title element
+//     const titleElement = document.createElement('figcaption');
+//     titleElement.textContent = title;
+
+//     // Create details element based on sort criteria
+//     let detailsElement;
+
+//     switch (currentSortCriteria) {
+//         case 'date':
+//             detailsElement = document.createElement('p');
+//             detailsElement.textContent = new Date(date).toLocaleDateString();
+//             break;
+//         case 'likes':
+//             detailsElement = document.createElement('p');
+//             detailsElement.textContent = `${likes} Likes`;
+//             break;
+//         case 'title':
+//             detailsElement = document.createElement('p');
+//             detailsElement.textContent = title; 
+//             break;
+//         default:
+//             break;
+//     }
+
+//     // Append elements to figure
+//     figure.appendChild(mediaElement);
+//     // Create a container for title and details
+//     const textContainer = document.createElement('div');
+//     textContainer.classList.add('text-container'); // Add a class for styling
+//     textContainer.appendChild(titleElement);
+//     textContainer.appendChild(detailsElement);
+//     figure.appendChild(textContainer);
+
+//     // Add an event listener to the figure
+//     figure.addEventListener('click', () => displayLightbox(lightboxFigures.indexOf(figure)));
+
+//     return figure;
+// }
+
+
 function createPhotoFigure(photoData, folderName) {
     const { title, image, video, likes, date } = photoData;
 
@@ -117,8 +174,10 @@ function createPhotoFigure(photoData, folderName) {
     textContainer.classList.add('text-container'); // Add a class for styling
     textContainer.appendChild(titleElement);
     textContainer.appendChild(detailsElement);
-
     figure.appendChild(textContainer);
+
+    // Add an event listener to the figure
+    figure.addEventListener('click', () => displayLightbox(lightboxFigures.indexOf(figure)));
 
     return figure;
 }
@@ -151,17 +210,68 @@ let currentImageIndex = 0;
 const lightbox = document.querySelector('.lightbox');
 const lightboxFigures = [];
 
+
+// function displaySortedPhotos(sortedPhotos, folderName) {
+//     const albumSection = document.querySelector('.album');
+//     albumSection.innerHTML = ''; // Clear existing content
+
+//     sortedPhotos.forEach((photo, index) => {
+//         const photoFigure = createPhotoFigure(photo, folderName);
+//         lightboxFigures.push(photoFigure); // Add to lightboxFigures array
+//         photoFigure.addEventListener('click', () => displayLightbox(index)); // Add click event listener
+//         albumSection.appendChild(photoFigure);
+//     });
+// }
+
+// function displaySortedPhotos(sortedPhotos, folderName) {
+//     const albumSection = document.querySelector('.album');
+//     albumSection.innerHTML = ''; // Clear existing content
+
+//     // sortedPhotos.forEach((photo, index) => {
+//     //     const photoFigure = createPhotoFigure(photo, folderName);
+
+//     //     // Add an event listener to open the lightbox when the figure is clicked
+//     //     photoFigure.addEventListener('click', () => displayLightbox(index));
+
+//     //     lightboxFigures.push(photoFigure); // Add to lightboxFigures array
+//     //     albumSection.appendChild(photoFigure);
+//     // });
+//     lightboxFigures.length = 0; // Clear the lightboxFigures array
+
+//     sortedPhotos.forEach((photo, index) => {
+//         const photoFigure = createPhotoFigure(photo, folderName);
+//         lightboxFigures.push(photoFigure); // Add to lightboxFigures array
+//         lightboxFigures[index].addEventListener('click', () => displayLightbox(index)); // Add click event listener
+//         albumSection.appendChild(photoFigure);
+//     });
+// }
+
 function displaySortedPhotos(sortedPhotos, folderName) {
     const albumSection = document.querySelector('.album');
     albumSection.innerHTML = ''; // Clear existing content
 
+    lightboxFigures.length = 0; // Clear the lightboxFigures array
+
     sortedPhotos.forEach((photo, index) => {
         const photoFigure = createPhotoFigure(photo, folderName);
+    
+        if (!photoFigure) {
+            console.error('Error creating photo figure:', photo);
+            return; // Skip this iteration if there's an issue with photoFigure
+        }
+    
+        // Log the type of element before appending
+        console.log('Type of photoFigure:', typeof photoFigure);
+    
         lightboxFigures.push(photoFigure); // Add to lightboxFigures array
-        photoFigure.addEventListener('click', () => displayLightbox(index)); // Add click event listener
+    
+        // Add click event listener before appending to the DOM
+        photoFigure.addEventListener('click', () => displayLightbox(index));
+    
         albumSection.appendChild(photoFigure);
     });
 }
+
 
 //let photos = []; // Declare photos globally
 let sortOrder = {
@@ -184,27 +294,7 @@ function toggleSortOrder(criteria) {
 
 
 // Function to sort photos based on the selected criteria
-function sortPhotos(criteria, media) {
-    toggleSortOrder(criteria);
 
-    // Sort the photos based on the selected criteria
-    const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-        .sort((a, b) => {
-            switch (currentSortCriteria) {
-                case 'date':
-                    return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-                case 'likes':
-                    return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-                    case 'title':
-                        return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-                default:
-                    return 0;
-            }
-        });
-
-    // Display the sorted photos
-    displaySortedPhotos(sortedPhotos, folderName);
-}
 
 
 // Event listener for dropdown change
@@ -271,6 +361,41 @@ async function init() {
         console.log('photographerName:', photographerName);
         console.log('photographers array:', photographers);
         console.log('photographerData:', photographerData);
+
+        //Fonction de tri
+        function sortPhotos(criteria, media) {
+            toggleSortOrder(criteria);
+        
+            // Sort the photos based on the selected criteria
+            const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+                .sort((a, b) => {
+                    switch (currentSortCriteria) {
+                        case 'date':
+                            return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+                        case 'likes':
+                            return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+                            case 'title':
+                                return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+                        default:
+                            return 0;
+                    }
+                });
+        
+            // Display the sorted photos
+            displaySortedPhotos(sortedPhotos, folderName);
+            sortPhotos(criteria, media);
+            console.log(sortPhotos);
+            console.log(displaySortedPhotos);
+        
+        }
+
+        // function reverseArrayOrder(photographers) {
+        //     // Use the reverse method to reverse the order of the array
+        //     return photographers.reverse();
+        // }
+
+        // console.log(photographers);
+        // reverseArrayOrder(photographers);
 
         // If found, display details
         if (photographerData) {

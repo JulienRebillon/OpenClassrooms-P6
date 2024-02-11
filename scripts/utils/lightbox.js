@@ -2,6 +2,17 @@ function displayLightbox(index) {
     currentImageIndex = index;
     showImage(currentImageIndex);
     lightbox.style.display = 'block';
+    //Add the show class to change the z-index value
+    lightbox.classList.add('show');
+
+    // Append the selected figure to lightbox_content
+    const lightboxContent = document.querySelector('.lightbox_content');
+    
+     // Debugging: Log the content before appending
+     console.log('lightboxFigures[index]:', lightboxFigures[index]);
+    
+    lightboxContent.innerHTML = ''; // Clear existing content
+    lightboxContent.appendChild(lightboxFigures[index]);
 
     // Event listeners for navigation
     document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);

@@ -1,5 +1,6 @@
 body {
     box-sizing: border-box;
+    
 }
 
 
@@ -189,10 +190,64 @@ form input {
 /* LIGHTBOX */
 
 .lightbox {
+    
+
+    display: none;
     width: 100%;
-    height: 80%;
-    background-color: gray;
+    height: 100%;
+    background-color: rgb(203, 203, 203);
+    
+    
+    z-index: 0;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
+
+.lightbox.show {
+    z-index:2;
+}
+
+.lightbox_container {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.lightbox-close, .arrowLeft, .arrowRight {
+    color: #901C1C;
+    font-size: 60px;
+    font-weight: bold;
+    
+}
+
+.lightbox_content {
+    width: 80%;
+}
+
+.lightbox_left, .lightbox_right {
+    width: 10%;
+    display: flex;
+    background-color: white;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox_right {
+    position: relative;
+    
+    
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 33%;
+}
+
+
 
 
 
