@@ -137,14 +137,19 @@ body {
 }
 
 figure {
-    width: 300px;
-    height: 350px;
+    width: 25%;
+    height: 20%;
     margin-bottom: 50px;
     margin-left: 0;
     margin-right: 0;
 }
 
-figure img {
+/* Adjust the margin based on the figure width to maintain space-between effect */
+figure:nth-child(3n + 1) {
+    margin-right: 20px;
+}
+
+figure img, figure video {
     height: 350px;
     width: 100%;
     object-fit: cover;
@@ -154,6 +159,23 @@ figure .text-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+figure .figure-likes {
+    display: flex;
+}
+
+.figure-likes p, .text-container {
+    color: #901C1C;
+    padding-right: 10px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.figure-button {
+    border: none;
+    background-color: white;
+    color: #901C1C;
 }
 
 
@@ -224,7 +246,22 @@ form input {
 
 .lightbox_content {
     width: 80%;
+    height: 100%;
+    overflow: hidden; /* Ensure the content doesn't overflow */
 }
+
+.lightbox_content figure {
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox_content img, .lightbox_content video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Adjust the object-fit property as needed */
+}
+
+
 
 .lightbox_left, .lightbox_right {
     width: 10%;
