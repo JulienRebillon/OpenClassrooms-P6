@@ -29,11 +29,11 @@
       <div class="filter">
         <label for="sortDropdown">Trier Par</label>
         <select id="sortDropdown" aria-labelledby="sortDropdown">
-            <option value="date">Date</option>
-            <div class="nav_separateur"></div>
-            <option value="popularity">Popularité</option>
-            <div class="nav_separateur"></div>
-            <option value="title">Titre</option>
+          <!--<option disabled selected hidden>Choisir un critère</option>-->
+                   
+          <option selected ="popularity" class="filter_border">Popularité</option>  
+          <option value="date" class="filter_border">Date</option>         
+          <option value="title" class="filter_border">Titre</option>
         </select>
         <div id="sortDate" class="sort-button" onclick="sortPhotos('date')">Date</div>
         <div id="sortPopularity" class="sort-button" onclick="sortPhotos('popularity')">Popularité</div>
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 
-    <div class="lightbox">
+    <div id="lightbox" class="lightbox">
 
       <div class="lightbox_container">
 
@@ -106,13 +106,14 @@
     </div>
 
       
-
+    <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/templates/photographer.js"></script>
     <script src="/scripts/utils/keyboard.js"></script>
+    
     <script src="/scripts/pages/photographer.js"></script>
     
     <script src="/scripts/utils/contactForm.js"></script>
-    <script src="/scripts/utils/lightbox.js"></script>
+    
     <script src="/scripts/pages/index.js"></script>
     <script src="https://kit.fontawesome.com/109e9bd0aa.js" crossorigin="anonymous"></script>
 

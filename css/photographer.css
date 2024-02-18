@@ -119,11 +119,31 @@ body {
     display: none;
 }
 
-.nav_separateur {
-    width: 80%;
-    height: 10px;
+/*
+.filter_border option:nth-child(2) {
+    border-top: 3px white solid;
+    border-bottom: 3px white solid;
+}*/
+
+.filter_border .dropdown-container::before,
+.filter_border .dropdown-container::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
     background-color: white;
 }
+
+.filter_border .dropdown-container::before {
+    margin-bottom: 3px;
+}
+
+.filter_border .dropdown-container::after {
+    margin-top: 3px;
+}
+
+
+
 
 /* ALBUM */
 
