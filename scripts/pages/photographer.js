@@ -1,8 +1,10 @@
 //Mettre le code JavaScript lié à la page photographer.html
 //let photographers = data.photographers;
 
-let photographers = [];
-let media = [];
+//let photographers = [];
+//let media = [];
+
+
 
 async function getPhotographers() {
     try {
@@ -10,50 +12,29 @@ async function getPhotographers() {
         const data = await response.json();
 
         // Check if 'photographers' and 'media' properties exist in the data object
-        photographers = data.photographers || [];
-        media = data.media || [];
+    //     photographers = data.photographers || [];
+    //     media = data.media || [];
 
-        return { photographers, media };
+    //     return { photographers, media };
+    // } catch (error) {
+    //     console.error('Error fetching photographers data', error);
+    //     return { photographers: [], media: [] }; // Return empty arrays in case of an error
+    // }
+
+        // Check if 'photographers' and 'media' properties exist in the data object
+        SharedData.photographers = data.photographers || [];
+        SharedData.media = data.media || [];
+
+        return SharedData;
     } catch (error) {
         console.error('Error fetching photographers data', error);
-        return { photographers: [], media: [] }; // Return empty arrays in case of an error
+        return SharedData; // Return shared data in case of an error
     }
+
+
 }
 
-// async function getPhotographers() {
-//     try {
-//         const response = await fetch('Data/photographers.json');
-//         const data = await response.json();
 
-//         // Check if 'photographers' property exists in the data object
-//         const photographers = data.photographers || [];
-
-//         const media = data.media;
-
-//         return { photographers, media };
-//     } catch (error) {
-//         console.error('Error fetching photographers data', error);
-//         return { photographers: [] }; // Return an empty array in case of an error
-//     }
-// }
-
-// async function getPhotographers() {
-//     try {
-//         const response = await fetch('Data/photographers.json');
-//         const data = await response.json();
-
-//         console.log('Data from JSON:', data);
-
-//         // fetch photographer's data under the "photographers" key in the JSON file
-//         const photographers = data.photographers;
-//         const media = data.media;
-
-//         return { photographers, media };
-//     } catch (error) {
-//         console.error('Error fetching photographers data', error);
-//         return { photographers: [] }; // Return an empty array in case of an error
-//     }
-// }
 
 // function getUserDetails(name, city, country, tagline) {
 function getUserDetailsData(data) {
@@ -245,26 +226,6 @@ sortingChevron.addEventListener('click', () => {
 
 
 
-// //let photos = []; // Declare photos globally
-// let sortOrder = {
-//     date: 'desc', // Default sort order for date
-//     popularity: 'desc', // Default sort order for popularity
-//     title: 'asc', // Default sort order for title
-// };
-
-// // Function to toggle sort order
-// function toggleSortOrder(criteria) {
-//     if (currentSortCriteria === criteria) {
-//         // If the same criteria is clicked again, toggle between 'asc' and 'desc'
-//         sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
-//     } else {
-//         // If a new criteria is clicked, set it to 'asc'
-//         currentSortCriteria = criteria;
-//         sortOrder[criteria] = 'asc';
-//     }
-// }
-
-
 //Function to sort photos based on the selected criteria
 
         function sortPhotos(criteria, media) {
@@ -326,22 +287,10 @@ function calculateTotalLikes(media, photographerId) {
 
 function displayTotalLikes(totalLikes, photographerPrice) {
     const likeContainer = document.querySelector('.like_container');
-    likeContainer.innerHTML = `
-        <p>${totalLikes} <i class="fas fa-heart"></i></p>
-        ${createPhotographerPrice(photographerPrice).outerHTML}
-    `;
+    likeContainer.innerHTML = `<p class="totalLikes">${totalLikes} <i class="fas fa-heart"></i></p>`;    
+    // Append photographer's price to the likeContainer
+    likeContainer.appendChild(createPhotographerPrice(photographerPrice));
 }
-
-// function displayTotalLikesAndPrice(media, photographerId, photographerPrice) {
-//     const totalLikes = calculateTotalLikes(media, photographerId);
-
-//     const likeContainer = document.querySelector('.like_container');
-//     likeContainer.innerHTML = `
-//         <p>${totalLikes} <i class="fas fa-heart"></i></p>
-//         ${createPhotographerPrice(photographerPrice).outerHTML}
-//     `;
-// }
-
 
 
 
@@ -362,46 +311,11 @@ function displayTotalLikes(totalLikes, photographerPrice) {
 //         const photographerName = urlSearchParams.get('name');
 
 //         // Search array for the photographer's name
-//         const photographerData = photographers.find(photographer => photographer.name === photographerName);
-        
+//         let photographerData = photographers.find(photographer => photographer.name === photographerName);
+
 //         console.log('photographerName:', photographerName);
 //         console.log('photographers array:', photographers);
 //         console.log('photographerData:', photographerData);
-
-//         //Fonction de tri
-//         function sortPhotos(criteria, media) {
-//             toggleSortOrder(criteria);
-        
-//             // Sort the photos based on the selected criteria
-//             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-//                 .sort((a, b) => {
-//                     switch (currentSortCriteria) {
-//                         case 'date':
-//                             return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-//                         case 'likes':
-//                             return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-//                             case 'title':
-//                                 return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-//                         default:
-//                             return 0;
-//                     }
-//                 });
-        
-//             // Display the sorted photos
-//             displaySortedPhotos(sortedPhotos, folderName);
-//             sortPhotos(criteria, media);
-//             console.log(sortPhotos);
-//             console.log(displaySortedPhotos);
-        
-//         }
-
-//         // function reverseArrayOrder(photographers) {
-//         //     // Use the reverse method to reverse the order of the array
-//         //     return photographers.reverse();
-//         // }
-
-//         // console.log(photographers);
-//         // reverseArrayOrder(photographers);
 
 //         // If found, display details
 //         if (photographerData) {
@@ -412,17 +326,16 @@ function displayTotalLikes(totalLikes, photographerPrice) {
 
 //             // Display the picture in the .userPhoto div
 //             displayUserPhoto(photographerData.portrait);
-            
 
-//             // Display the photos in the .album section
 //             const albumSection = document.querySelector('.album');
-//             media
-//                 .filter((photo) => photo.photographerId === photographerData.id)
-//                 .forEach((photo) => {
-//                     const folderName = mapPhotographerFolderName(photographerData.name);
-//                     const photoFigure = createPhotoFigure(photo, folderName);
-//                     albumSection.appendChild(photoFigure);
-//                 });
+//             const folderName = mapPhotographerFolderName(photographerData.name);
+
+//             // Create and store photo figures in lightboxFigures array
+//             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
+//             lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName)));
+
+//             // Display the sorted photos
+//             displaySortedPhotos(sortedPhotos, folderName);
 
 //             // Calculate and display total likes
 //             const totalLikes = calculateTotalLikes(media, photographerData.id);
@@ -437,13 +350,12 @@ function displayTotalLikes(totalLikes, photographerPrice) {
 //         const photographerSection = document.querySelector('.photographer_section');
 //         photographerSection.style.display = 'none';
 
-//         // Display other data
-//         //displayData(photographers);
 //     } catch (error) {
 //         console.error('Error initializing the page', error);
-//         // Handle initialization error, e.g., display an error message on the page
+//         // Display initialization error
 //     }
 // }
+
 
 // init();
 
@@ -452,11 +364,9 @@ async function init() {
         // Retrieve photographers' data
         const { photographers, media } = await getPhotographers();
 
-        console.log('Photographers:', photographers);
-
         if (!photographers || photographers.length === 0) {
             console.error('No photographers found in the data');
-            return; // Exit the function if no photographers are found
+            return;
         }
 
         // Extract photographer's name from the URL
@@ -464,21 +374,29 @@ async function init() {
         const photographerName = urlSearchParams.get('name');
 
         // Search array for the photographer's name
-        const photographerData = photographers.find(photographer => photographer.name === photographerName);
+        const photographerData = photographers.find((photographer) => {
+            console.log('Current Photographer Name:', photographer.name);
+            console.log('Target Photographer Name:', photographerName);
+            return photographer.name === photographerName;
+        });
+        
+        console.log('Found Photographer Data:', photographerData);
+        //const photographerData = photographers.find(photographer => photographer.name === photographerName);
 
-        console.log('photographerName:', photographerName);
-        console.log('photographers array:', photographers);
-        console.log('photographerData:', photographerData);
-
-        // If found, display details
         if (photographerData) {
+            // Assign photographerData to the module
+            SharedData.photographerData = photographerData;
+
             const userDetailsData = getUserDetailsData(photographerData);
-
-            // Display the details in the .userDetails div
+            //displayUserDetails(userDetailsData);
+            //displayUserPhoto(photographerData.portrait);
+            console.log('Before displayUserDetails:', photographerData);
             displayUserDetails(userDetailsData);
+            console.log('After displayUserDetails');
 
-            // Display the picture in the .userPhoto div
+            console.log('Before displayUserPhoto:', photographerData.portrait);
             displayUserPhoto(photographerData.portrait);
+            console.log('After displayUserPhoto');
 
             const albumSection = document.querySelector('.album');
             const folderName = mapPhotographerFolderName(photographerData.name);
@@ -495,6 +413,7 @@ async function init() {
             const photographerPrice = photographerData.price; // Assuming photographerData has a 'price' property
             displayTotalLikes(totalLikes, photographerPrice);
 
+            
         } else {
             console.error('Photographer not found in the data');
         }
@@ -502,12 +421,10 @@ async function init() {
         // After getting photographers' data, add this line to hide the photographer_section
         const photographerSection = document.querySelector('.photographer_section');
         photographerSection.style.display = 'none';
-
     } catch (error) {
         console.error('Error initializing the page', error);
-        // Display initialization error
     }
 }
 
-
+// Call the init function
 init();

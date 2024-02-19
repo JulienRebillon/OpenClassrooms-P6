@@ -20,7 +20,7 @@
 
         <div class="userDetails"></div>
 
-        <button class="contact_button" onclick="displayModal()" role="button" tabindex="0">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal(photographerData)" role="button" tabindex="0">Contactez-moi</button>
 
         <div class="userPhoto"></div>
 
@@ -103,7 +103,7 @@
         <div class="lightbox_content"></div>
 
         <div class="lightbox_right">
-          <div class="lightbox-close" role="button" tabindex="0" aria-label="Close Lightbox" onclick="closeLightbox()">
+          <div class="lightbox-close" role="button" tabindex="0" aria-label="Close Lightbox" onclick="closeLightbox(photographerData)">
             <i class="fa-solid fa-x"></i>
           </div>
 
@@ -115,6 +115,7 @@
     </div>
 
       
+    <script src="/scripts/utils/sharedData.js"></script>
     <script src="/scripts/utils/lightbox.js"></script>
     <script src="/scripts/templates/photographer.js"></script>
     <script src="/scripts/utils/keyboard.js"></script>

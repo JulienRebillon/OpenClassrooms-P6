@@ -348,6 +348,7 @@ form input {
 
 .like_container {
     position: fixed;
+    display: flex;
     right: 3%;
     bottom: 0px;
     height: 70px;
@@ -356,4 +357,14 @@ form input {
     z-index: 2;
     padding-left: 20px;
 
+}
+
+.totalLikes {
+    font-size: 24px;
+    width: 150px;
+}
+
+.like_container .priceStyle {
+    font-size: 24px;
+    font-weight: bold;
 }
