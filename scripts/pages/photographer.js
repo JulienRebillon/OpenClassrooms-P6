@@ -1,24 +1,41 @@
 //Mettre le code JavaScript lié à la page photographer.html
 //let photographers = data.photographers;
 
-
+let photographers = [];
+let media = [];
 
 async function getPhotographers() {
     try {
         const response = await fetch('Data/photographers.json');
         const data = await response.json();
 
-        // Check if 'photographers' property exists in the data object
-        const photographers = data.photographers || [];
-
-        const media = data.media;
+        // Check if 'photographers' and 'media' properties exist in the data object
+        photographers = data.photographers || [];
+        media = data.media || [];
 
         return { photographers, media };
     } catch (error) {
         console.error('Error fetching photographers data', error);
-        return { photographers: [] }; // Return an empty array in case of an error
+        return { photographers: [], media: [] }; // Return empty arrays in case of an error
     }
 }
+
+// async function getPhotographers() {
+//     try {
+//         const response = await fetch('Data/photographers.json');
+//         const data = await response.json();
+
+//         // Check if 'photographers' property exists in the data object
+//         const photographers = data.photographers || [];
+
+//         const media = data.media;
+
+//         return { photographers, media };
+//     } catch (error) {
+//         console.error('Error fetching photographers data', error);
+//         return { photographers: [] }; // Return an empty array in case of an error
+//     }
+// }
 
 // async function getPhotographers() {
 //     try {
@@ -202,27 +219,79 @@ function displaySortedPhotos(sortedPhotos, folderName) {
 }
 
 
-//let photos = []; // Declare photos globally
-let sortOrder = {
-    date: 'desc', // Default sort order for date
-    popularity: 'desc', // Default sort order for popularity
-    title: 'asc', // Default sort order for title
-};
 
-// Function to toggle sort order
-function toggleSortOrder(criteria) {
-    if (currentSortCriteria === criteria) {
-        // If the same criteria is clicked again, toggle between 'asc' and 'desc'
-        sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+let sortOrder = 'asc'; // Initial sorting order
+
+const sortingChevron = document.querySelector('.sorting-chevron');
+const chevronUp = sortingChevron.querySelector('i:first-child');
+const chevronDown = sortingChevron.querySelector('i:last-child');
+
+sortingChevron.addEventListener('click', () => {
+    if (sortOrder === 'asc') {
+        sortOrder = 'desc';
+        chevronUp.classList.remove('active');
+        chevronDown.classList.add('active');
     } else {
-        // If a new criteria is clicked, set it to 'asc'
-        currentSortCriteria = criteria;
-        sortOrder[criteria] = 'asc';
+        sortOrder = 'asc';
+        chevronUp.classList.add('active');
+        chevronDown.classList.remove('active');
     }
-}
+
+    // Here, you can update your sorting logic or trigger any other actions based on the sortOrder
+    console.log('Sorting Order:', sortOrder);
+});
 
 
-// Function to sort photos based on the selected criteria
+
+
+
+// //let photos = []; // Declare photos globally
+// let sortOrder = {
+//     date: 'desc', // Default sort order for date
+//     popularity: 'desc', // Default sort order for popularity
+//     title: 'asc', // Default sort order for title
+// };
+
+// // Function to toggle sort order
+// function toggleSortOrder(criteria) {
+//     if (currentSortCriteria === criteria) {
+//         // If the same criteria is clicked again, toggle between 'asc' and 'desc'
+//         sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+//     } else {
+//         // If a new criteria is clicked, set it to 'asc'
+//         currentSortCriteria = criteria;
+//         sortOrder[criteria] = 'asc';
+//     }
+// }
+
+
+//Function to sort photos based on the selected criteria
+
+        function sortPhotos(criteria, media) {
+            toggleSortOrder(criteria);
+        
+            // Sort the photos based on the selected criteria
+            const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+                .sort((a, b) => {
+                    switch (currentSortCriteria) {
+                        case 'date':
+                            return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+                        case 'likes':
+                            return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+                            case 'title':
+                                return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+                        default:
+                            return 0;
+                    }
+                });
+        
+            // Display the sorted photos
+            displaySortedPhotos(sortedPhotos, folderName);
+            sortPhotos(criteria, media);
+            console.log(sortPhotos);
+            console.log(displaySortedPhotos);
+        
+        }
 
 
 
@@ -230,9 +299,8 @@ function toggleSortOrder(criteria) {
 const sortDropdown = document.getElementById('sortDropdown');
 sortDropdown.addEventListener('change', function () {
     const selectedOption = this.value;
-    sortPhotos(selectedOption, media); // Pass the 'media' array to the function
+    sortPhotos(selectedOption); // 'photographers' and 'media' are now accessible globally
 });
-
 
 
 
@@ -437,9 +505,9 @@ async function init() {
 
     } catch (error) {
         console.error('Error initializing the page', error);
-        // Handle initialization error, e.g., display an error message on the page
+        // Display initialization error
     }
 }
 
-// Call the init function to start the initialization process
+
 init();

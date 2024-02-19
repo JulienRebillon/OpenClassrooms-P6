@@ -95,9 +95,12 @@ body {
 /* FILTER */
 
 .filter {
+    position: relative;
     margin-top: 50px;
     margin-left: 100px;
     font-size: 24px;
+    width: 310px;
+    overflow:visible; /* allows for overlap */
 }
 
 #sortDropdown {
@@ -107,17 +110,50 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #901C1C;
+    min-width: 200px;
     color: white;
+    appearance: none; /*remove the browser's default chevron*/
 }
 
-#sortDropdown:hover {
+.sorting-chevron {
+    position: absolute;
+    height: 50px;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    
+}
+
+.sorting-chevron i {
+    font-size: 24px;
+    color: white;
+    background-color: #901C1C;
+    position: relative;
+    z-index: 1;
+}
+
+.sorting-chevron i.active {
+    display: block;
+}
+
+.sorting-chevron i:first-child {
+    margin-bottom: -2px; /* Adjust as needed */
+    z-index: 2;
+}
+
+
+
+
+/*#sortDropdown:hover {
     background-color: #D3573C;
     color: black;
-}
+}*/
 
-.sort-button {
-    display: none;
-}
+
 
 /*
 .filter_border option:nth-child(2) {

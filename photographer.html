@@ -29,16 +29,24 @@
       <div class="filter">
         <label for="sortDropdown">Trier Par</label>
         <select id="sortDropdown" aria-labelledby="sortDropdown">
-          <!--<option disabled selected hidden>Choisir un critère</option>-->
-                   
-          <option selected ="popularity" class="filter_border">Popularité</option>  
-          <option value="date" class="filter_border">Date</option>         
-          <option value="title" class="filter_border">Titre</option>
+            <option selected="popularity" class="filter_border">
+                Popularité                
+            </option>
+            <option value="date" class="filter_border">
+                Date                
+            </option>
+            <option value="title" class="filter_border">
+                Titre                
+            </option>
         </select>
-        <div id="sortDate" class="sort-button" onclick="sortPhotos('date')">Date</div>
-        <div id="sortPopularity" class="sort-button" onclick="sortPhotos('popularity')">Popularité</div>
-        <div id="sortTitle" class="sort-button" onclick="sortPhotos('title')">Titre</div>
+        <div class="sorting-chevron" id="sorting-chevron">
+          <i class="fas fa-chevron-up"></i>
+          <i class="fas fa-chevron-down"></i>
+        </div>
       </div>
+    
+
+
 
       <section class="album"></section>
 
@@ -48,6 +56,7 @@
 
 
     </main>
+
     <div id="contact_modal">
 			<div class="modal">
 				<header>
