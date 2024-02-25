@@ -26,25 +26,27 @@
 
       </div>
 
+      
       <div class="filter">
-        <label for="sortDropdown">Trier Par</label>
-        <select id="sortDropdown" aria-labelledby="sortDropdown">
-            <option selected="popularity" class="filter_border">
-                Popularité                
-            </option>
-            <option value="date" class="filter_border">
-                Date                
-            </option>
-            <option value="title" class="filter_border">
-                Titre                
-            </option>
-        </select>
-        <div class="sorting-chevron" id="sorting-chevron">
-          <i class="fas fa-chevron-up"></i>
-          <i class="fas fa-chevron-down"></i>
+        <div class="filter_label">
+          <label for="sortDropdown">Trier Par</label>
         </div>
+        
+        <div class="custom-dropdown">
+            
+            <ul role="listbox" aria-labelledby="customDropdownBtn" class="custom-dropdown-content" id="sortDropdown">
+                <li role="option" class="filter-border" data-value="popularity">Popularité</li>
+                <li role="option" class="filter-border" data-value="date">Date</li>
+                <li role="option" class="filter-border" data-value="title">Titre</li>
+            </ul>
+        </div>
+        <button id="customDropdownBtn" class="custom-dropdown-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortDropdown">
+            <div class="sorting-chevron" id="sorting-chevron">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </button>
       </div>
-    
+
 
 
 

@@ -60,7 +60,7 @@ function createPhotographerImage(picture) {
     return img;
 }
 
-let currentSortCriteria = 'date';
+//let currentSortCriteria = 'date';
 
 // Fetch
 function displayUserPhoto(portrait) {
@@ -201,7 +201,7 @@ function displaySortedPhotos(sortedPhotos, folderName) {
 
 
 
-let sortOrder = 'asc'; // Initial sorting order
+//let sortOrder = 'asc'; // Initial sorting order
 
 const sortingChevron = document.querySelector('.sorting-chevron');
 const chevronUp = sortingChevron.querySelector('i:first-child');
@@ -228,40 +228,96 @@ sortingChevron.addEventListener('click', () => {
 
 //Function to sort photos based on the selected criteria
 
-        function sortPhotos(criteria, media) {
-            toggleSortOrder(criteria);
-        
-            // Sort the photos based on the selected criteria
-            const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-                .sort((a, b) => {
-                    switch (currentSortCriteria) {
-                        case 'date':
-                            return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-                        case 'likes':
-                            return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-                            case 'title':
-                                return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-                        default:
-                            return 0;
-                    }
-                });
-        
-            // Display the sorted photos
-            displaySortedPhotos(sortedPhotos, folderName);
-            sortPhotos(criteria, media);
-            console.log(sortPhotos);
-            console.log(displaySortedPhotos);
-        
-        }
+// Function to toggle the sort order
+function toggleSortOrder(criteria) {
+    // Check if the criteria matches the current sort criteria
+    if (criteria === currentSortCriteria) {
+        // If matched, toggle the sort order
+        sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+    } else {
+        // If not matched, set the new criteria and default to 'asc' order
+        currentSortCriteria = criteria;
+        sortOrder[criteria] = 'asc';
+    }
+}
 
+// Function to sort photos based on the selected criteria
+function sortPhotos(criteria) {
+    toggleSortOrder(criteria);
 
+    // Sort the photos based on the selected criteria
+    const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+        .sort((a, b) => {
+            switch (currentSortCriteria) {
+                case 'date':
+                    return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+                case 'likes':
+                    return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+                case 'title':
+                    return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+                default:
+                    return 0;
+            }
+        });
+
+    // Display the sorted photos
+    displaySortedPhotos(sortedPhotos, folderName);
+
+    console.log(sortOrder);
+}
 
 // Event listener for dropdown change
 const sortDropdown = document.getElementById('sortDropdown');
 sortDropdown.addEventListener('change', function () {
     const selectedOption = this.value;
-    sortPhotos(selectedOption); // 'photographers' and 'media' are now accessible globally
+    sortPhotos(selectedOption);
 });
+
+// Initial values
+let currentSortCriteria = 'date'; // Initial sort criteria
+const sortOrder = {
+    date: 'asc',
+    likes: 'asc',
+    title: 'asc',
+};
+
+// Assuming media, photographerData, and displaySortedPhotos are available globally
+
+
+//         function sortPhotos(criteria, media) {
+//             toggleSortOrder(criteria);
+        
+//             // Sort the photos based on the selected criteria
+//             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+//                 .sort((a, b) => {
+//                     switch (currentSortCriteria) {
+//                         case 'date':
+//                             return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+//                         case 'likes':
+//                             return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+//                             case 'title':
+//                                 return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+//                         default:
+//                             return 0;
+//                     }
+//                 });
+        
+//             // Display the sorted photos
+//             displaySortedPhotos(sortedPhotos, folderName);
+//             sortPhotos(criteria, media);
+//             console.log(sortPhotos);
+//             console.log(displaySortedPhotos);
+        
+//         }
+
+
+
+// // Event listener for dropdown change
+// const sortDropdown = document.getElementById('sortDropdown');
+// sortDropdown.addEventListener('change', function () {
+//     const selectedOption = this.value;
+//     sortPhotos(selectedOption); // 'photographers' and 'media' are now accessible globally
+// });
 
 
 
@@ -386,6 +442,7 @@ async function init() {
         if (photographerData) {
             // Assign photographerData to the module
             SharedData.photographerData = photographerData;
+            SharedData.media = media;
 
             const userDetailsData = getUserDetailsData(photographerData);
             //displayUserDetails(userDetailsData);
