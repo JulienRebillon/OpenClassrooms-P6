@@ -15,8 +15,8 @@
 //     }
 //     return { name, picture, getUserCardDOM }
 // }
-let photographersTest = 'bonjour';
-console.log(photographersTest);
+// let photographersTest = 'bonjour';
+// console.log(photographersTest);
 
 function photographerTemplate(data) {
     const { name, portrait, city, country, tagline, price } = data;
@@ -104,7 +104,7 @@ const photographerName = urlSearchParams.get('name');
 
 //find the corresponding data in the photographers array
 //const photographerData = photographersTest.find(photographerTest => photographerTest.name === photographerName);
-const photographerData = photographersTest.find(photographerTest => photographerTest.name === photographerName);
+const photographerData = photographers.find(photographer => photographer.name === photographerName);
 
 if (photographerData) {
     const photographer = photographerTemplate(photographerData);

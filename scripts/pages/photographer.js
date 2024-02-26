@@ -1,4 +1,5 @@
 //Mettre le code JavaScript lié à la page photographer.html
+document.addEventListener("DOMContentLoaded", function () {
 //let photographers = data.photographers;
 
 //let photographers = [];
@@ -74,7 +75,7 @@ function displayUserPhoto(portrait) {
 
 
 
-function createPhotoFigure(photoData, folderName) {
+function createPhotoFigure(photoData, folderName, photographerData) {
     const { title, image, video, likes, date } = photoData;
 
     // Create figure element
@@ -141,7 +142,7 @@ function createPhotoFigure(photoData, folderName) {
     figure.appendChild(textContainer);
 
     // Add an event listener to the figure
-    figure.addEventListener('click', () => displayLightbox(lightboxFigures.indexOf(figure)));
+    figure.addEventListener('click', () => displayLightbox(lightboxFigures.indexOf(figure), photographerData));
 
     return figure;
 }
@@ -209,85 +210,154 @@ function displaySortedPhotos(sortedPhotos, folderName) {
 
 
 
-//let sortOrder = 'asc'; // Initial sorting order
-
-const sortingChevron = document.querySelector('.sorting-chevron');
-const chevronUp = sortingChevron.querySelector('i:first-child');
-const chevronDown = sortingChevron.querySelector('i:last-child');
-
-sortingChevron.addEventListener('click', () => {
-    if (sortOrder === 'asc') {
-        sortOrder = 'desc';
-        chevronUp.classList.remove('active');
-        chevronDown.classList.add('active');
-    } else {
-        sortOrder = 'asc';
-        chevronUp.classList.add('active');
-        chevronDown.classList.remove('active');
-    }
-
-    // Here, you can update your sorting logic or trigger any other actions based on the sortOrder
-    console.log('Sorting Order:', sortOrder);
-});
 
 
 
 
 
-//Function to sort photos based on the selected criteria
+// //Function to sort photos based on the selected criteria
 
-// Function to toggle the sort order
-function toggleSortOrder(criteria) {
-    // Check if the criteria matches the current sort criteria
-    if (criteria === currentSortCriteria) {
-        // If matched, toggle the sort order
-        sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
-    } else {
-        // If not matched, set the new criteria and default to 'asc' order
-        currentSortCriteria = criteria;
-        sortOrder[criteria] = 'asc';
-    }
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownButton = document.querySelector(".custom-dropdown-btn");
+    const dropdownMenu = document.getElementById("sortDropdown");
+    const dropdownOptions = document.querySelectorAll("#sortDropdown li");
 
-// Function to sort photos based on the selected criteria
-function sortPhotos(criteria) {
-    toggleSortOrder(criteria);
-
-    // Sort the photos based on the selected criteria
-    const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-        .sort((a, b) => {
-            switch (currentSortCriteria) {
-                case 'date':
-                    return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-                case 'likes':
-                    return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-                case 'title':
-                    return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-                default:
-                    return 0;
-            }
+    dropdownButton.addEventListener("click", function () {
+        dropdownMenu.classList.toggle("active");
+        // Toggle visibility of all dropdown options
+        dropdownOptions.forEach(option => {
+            option.style.display = dropdownMenu.classList.contains("active") ? "block" : "none";
         });
+    });
 
-    // Display the sorted photos
-    displaySortedPhotos(sortedPhotos, folderName);
-
-    console.log(sortOrder);
-}
-
-// Event listener for dropdown change
-const sortDropdown = document.getElementById('sortDropdown');
-sortDropdown.addEventListener('change', function () {
-    const selectedOption = this.value;
-    sortPhotos(selectedOption);
+    dropdownOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            // Handle sorting logic based on the selected value
+            const value = this.getAttribute('data-value');
+            console.log('Sorting by:', value);
+            sortPhotos(value); // Call the sortPhotos function with the selected criteria
+            // Hide dropdown after selection
+            dropdownMenu.classList.remove('active');
+        });
+    });
 });
 
-// Initial values
-let currentSortCriteria = 'date'; // Initial sort criteria
-const sortOrder = {
-    date: 'asc',
-    likes: 'asc',
-    title: 'asc',
-};
+
+// // Function to toggle the sort order
+// function toggleSortOrder(criteria) {
+//     // Check if the criteria matches the current sort criteria
+//     if (criteria === currentSortCriteria) {
+//         // If matched, toggle the sort order
+//         sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
+//     } else {
+//         // If not matched, set the new criteria and default to 'asc' order
+//         currentSortCriteria = criteria;
+//         sortOrder[criteria] = 'asc';
+//     }
+// }
+
+// // Function to sort photos based on the selected criteria
+// function sortPhotos(criteria) {
+//     toggleSortOrder(criteria);
+
+//     // Sort the photos based on the selected criteria
+//     const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
+//         .sort((a, b) => {
+//             switch (currentSortCriteria) {
+//                 case 'date':
+//                     return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+//                 case 'likes':
+//                     return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
+//                 case 'title':
+//                     return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+//                 default:
+//                     return 0;
+//             }
+//         });
+
+//     // Display the sorted photos
+//     displaySortedPhotos(sortedPhotos, folderName);
+
+//     console.log(sortOrder);
+// }
+
+// // Event listener for dropdown change
+// const sortDropdown = document.getElementById('sortDropdown');
+// sortDropdown.addEventListener('change', function () {
+//     const selectedOption = this.value;
+//     sortPhotos(selectedOption);
+// });
+
+// // Initial values
+// let currentSortCriteria = 'date'; // Initial sort criteria
+// const sortOrder = {
+//     date: 'asc',
+//     likes: 'asc',
+//     title: 'asc',
+// };
+
+
+
+    const caretBtn = document.getElementById('caretBtn');
+    const sortDropdown = document.getElementById('sortDropdown');
+
+    console.log("caretBtn:", caretBtn);
+    console.log("sortDropdown:", sortDropdown);
+
+    caretBtn.addEventListener('click', function () {
+        //sortDropdown.classList.toggle('active');
+        caretBtn.classList.toggle('active');
+    });
+
+    const dropdownOptions = document.querySelectorAll('#sortDropdown li');
+    dropdownOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+            console.log('Sorting by:', value);
+            // Toggle 'active' class for the dropdown menu
+            sortDropdown.classList.toggle('active');
+        });
+    });
+
+
+
+
+//Function to sort according to Likes
+function sortFiguresByLikes(ascending) {
+    const albumSection = document.querySelector('.album');
+    const figures = Array.from(albumSection.querySelectorAll('figure'));
+
+    figures.sort((figureA, figureB) => {
+        const likesA = parseInt(figureA.querySelector('.figure-likes p').textContent);
+        const likesB = parseInt(figureB.querySelector('.figure-likes p').textContent);
+
+        if (ascending) {
+            return likesA - likesB;
+        } else {
+            return likesB - likesA;
+        }
+    });
+
+    // Clear existing content
+    albumSection.innerHTML = '';
+
+    // Append sorted figures to album section
+    figures.forEach(figure => {
+        albumSection.appendChild(figure);
+    });
+}
+
+// Event listener for caretBtn
+let ascendingOrder = true; // Initial sorting order
+
+caretBtn.addEventListener('click', function () {
+    caretBtn.classList.toggle('active');
+    ascendingOrder = !ascendingOrder; // Toggle sorting order
+    sortFiguresByLikes(ascendingOrder);
+});
+
+
+
 
 
 
@@ -362,7 +432,7 @@ async function init() {
 
             // Create and store photo figures in lightboxFigures array
             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
-            lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName)));
+            lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName, photographerData)));
 
             // Display the sorted photos
             displaySortedPhotos(sortedPhotos, folderName);
@@ -387,3 +457,5 @@ async function init() {
 
 // Call the init function
 init();
+
+});
