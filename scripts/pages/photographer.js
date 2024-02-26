@@ -117,6 +117,14 @@ function createPhotoFigure(photoData, folderName) {
         // Increment the likes and update the text content
         photoData.likes += 1;
         detailsElement.textContent = `${photoData.likes} `;
+
+        // Update total likes
+        const photographerId = SharedData.photographerData.id; // Assuming you have photographerId available
+        const photographerPrice = SharedData.photographerData.price; // Assuming you have photographerPrice available
+        const media = SharedData.media; // Assuming you have access to media array
+
+        const totalLikes = calculateTotalLikes(media, photographerId);
+        displayTotalLikes(totalLikes, photographerPrice);
     });
 
     // Append like button to likes container
@@ -281,47 +289,6 @@ const sortOrder = {
     title: 'asc',
 };
 
-// Assuming media, photographerData, and displaySortedPhotos are available globally
-
-
-//         function sortPhotos(criteria, media) {
-//             toggleSortOrder(criteria);
-        
-//             // Sort the photos based on the selected criteria
-//             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-//                 .sort((a, b) => {
-//                     switch (currentSortCriteria) {
-//                         case 'date':
-//                             return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-//                         case 'likes':
-//                             return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-//                             case 'title':
-//                                 return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-//                         default:
-//                             return 0;
-//                     }
-//                 });
-        
-//             // Display the sorted photos
-//             displaySortedPhotos(sortedPhotos, folderName);
-//             sortPhotos(criteria, media);
-//             console.log(sortPhotos);
-//             console.log(displaySortedPhotos);
-        
-//         }
-
-
-
-// // Event listener for dropdown change
-// const sortDropdown = document.getElementById('sortDropdown');
-// sortDropdown.addEventListener('change', function () {
-//     const selectedOption = this.value;
-//     sortPhotos(selectedOption); // 'photographers' and 'media' are now accessible globally
-// });
-
-
-
-
 
 
 
@@ -349,71 +316,6 @@ function displayTotalLikes(totalLikes, photographerPrice) {
 }
 
 
-
-// async function init() {
-//     try {
-//         // Retrieve photographers' data
-//         const { photographers, media } = await getPhotographers();
-
-//         console.log('Photographers:', photographers);
-
-//         if (!photographers || photographers.length === 0) {
-//             console.error('No photographers found in the data');
-//             return; // Exit the function if no photographers are found
-//         }
-
-//         // Extract photographer's name from the URL
-//         const urlSearchParams = new URLSearchParams(window.location.search);
-//         const photographerName = urlSearchParams.get('name');
-
-//         // Search array for the photographer's name
-//         let photographerData = photographers.find(photographer => photographer.name === photographerName);
-
-//         console.log('photographerName:', photographerName);
-//         console.log('photographers array:', photographers);
-//         console.log('photographerData:', photographerData);
-
-//         // If found, display details
-//         if (photographerData) {
-//             const userDetailsData = getUserDetailsData(photographerData);
-
-//             // Display the details in the .userDetails div
-//             displayUserDetails(userDetailsData);
-
-//             // Display the picture in the .userPhoto div
-//             displayUserPhoto(photographerData.portrait);
-
-//             const albumSection = document.querySelector('.album');
-//             const folderName = mapPhotographerFolderName(photographerData.name);
-
-//             // Create and store photo figures in lightboxFigures array
-//             const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
-//             lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName)));
-
-//             // Display the sorted photos
-//             displaySortedPhotos(sortedPhotos, folderName);
-
-//             // Calculate and display total likes
-//             const totalLikes = calculateTotalLikes(media, photographerData.id);
-//             const photographerPrice = photographerData.price; // Assuming photographerData has a 'price' property
-//             displayTotalLikes(totalLikes, photographerPrice);
-
-//         } else {
-//             console.error('Photographer not found in the data');
-//         }
-
-//         // After getting photographers' data, add this line to hide the photographer_section
-//         const photographerSection = document.querySelector('.photographer_section');
-//         photographerSection.style.display = 'none';
-
-//     } catch (error) {
-//         console.error('Error initializing the page', error);
-//         // Display initialization error
-//     }
-// }
-
-
-// init();
 
 async function init() {
     try {
