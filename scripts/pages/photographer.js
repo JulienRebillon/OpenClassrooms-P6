@@ -120,9 +120,9 @@ function createPhotoFigure(photoData, folderName, photographerData) {
         detailsElement.textContent = `${photoData.likes} `;
 
         // Update total likes
-        const photographerId = SharedData.photographerData.id; // Assuming you have photographerId available
-        const photographerPrice = SharedData.photographerData.price; // Assuming you have photographerPrice available
-        const media = SharedData.media; // Assuming you have access to media array
+        const photographerId = SharedData.photographerData.id; 
+        const photographerPrice = SharedData.photographerData.price; 
+        const media = SharedData.media; 
 
         const totalLikes = calculateTotalLikes(media, photographerId);
         displayTotalLikes(totalLikes, photographerPrice);
@@ -186,7 +186,9 @@ function displaySortedPhotos(sortedPhotos, folderName) {
     const albumSection = document.querySelector('.album');
     albumSection.innerHTML = ''; // Clear existing content
 
-    lightboxFigures.length = 0; // Clear the lightboxFigures array
+    let testId = 7775342343; //test 26-02
+    //lightboxFigures.length = 0;
+    lightboxFigures.id = testId; // test 26-02
 
     sortedPhotos.forEach((photo, index) => {
         const photoFigure = createPhotoFigure(photo, folderName);
@@ -202,7 +204,7 @@ function displaySortedPhotos(sortedPhotos, folderName) {
         lightboxFigures.push(photoFigure); // Add to lightboxFigures array
     
         // Add click event listener before appending to the DOM
-        photoFigure.addEventListener('click', () => displayLightbox(index));
+        photoFigure.addEventListener('click', () => displayLightbox(index, lightboxFigures));
     
         albumSection.appendChild(photoFigure);
     });
@@ -318,6 +320,8 @@ document.addEventListener("DOMContentLoaded", function () {
             sortDropdown.classList.toggle('active');
         });
     });
+
+
 
 
 

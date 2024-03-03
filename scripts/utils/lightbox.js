@@ -3,24 +3,34 @@
 
 
 
-
-
-
-function updateLightboxContent() {
+function updateLightboxContent(index, lightboxFigures) {
     const lightboxContent = document.querySelector('.lightbox_content');
     lightboxContent.innerHTML = ''; // Clear existing content
 
-
-    if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
-        //create a clone of the figure, fixes the issue with disappearing figures. 
-        const clonedFigure = lightboxFigures[currentImageIndex].cloneNode(true);
+    if (lightboxFigures.length > 0 && index >= 0 && index < lightboxFigures.length) {
+        // Create a clone of the figure, fixes the issue with disappearing figures. 
+        const clonedFigure = lightboxFigures[index].cloneNode(true);
         lightboxContent.appendChild(clonedFigure);
     }
-
-    // if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
-    //     lightboxContent.appendChild(lightboxFigures[currentImageIndex]);
-    // }
 }
+
+
+
+// function updateLightboxContent() {
+//     const lightboxContent = document.querySelector('.lightbox_content');
+//     lightboxContent.innerHTML = ''; // Clear existing content
+
+
+//     if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
+//         //create a clone of the figure, fixes the issue with disappearing figures. 
+//         const clonedFigure = lightboxFigures[currentImageIndex].cloneNode(true);
+//         lightboxContent.appendChild(clonedFigure);
+//     }
+
+//     // if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
+//     //     lightboxContent.appendChild(lightboxFigures[currentImageIndex]);
+//     // }
+// }
 
 
 function closeLightbox() {
@@ -82,9 +92,26 @@ function showNextImage() {
     updateLightboxContent();
 }
 
-function displayLightbox(index, photographerData) {
+// function displayLightbox(index, photographerData) {
+//     currentImageIndex = index;
+//     updateLightboxContent();
+//     lightbox.style.display = 'block';
+//     // Add the show class to change the z-index value
+//     lightbox.classList.add('show');
+
+//     // Pass photographerData to closeLightbox function
+//     const lightboxCloseButton = document.querySelector('.lightbox-close');
+//     if (lightboxCloseButton) {
+//         lightboxCloseButton.addEventListener('click', () => closeLightbox(photographerData));
+//     }
+
+//     // Assuming photographerData is available where you are calling displayLightbox
+//     SharedData.photographerData = photographerData; 
+// }
+
+function displayLightbox(index, lightboxFigures) {
     currentImageIndex = index;
-    updateLightboxContent();
+    updateLightboxContent(index, lightboxFigures); // Pass lightboxFigures as an argument
     lightbox.style.display = 'block';
     // Add the show class to change the z-index value
     lightbox.classList.add('show');
@@ -98,6 +125,7 @@ function displayLightbox(index, photographerData) {
     // Assuming photographerData is available where you are calling displayLightbox
     SharedData.photographerData = photographerData; 
 }
+
 
 
 // Event listeners for navigation

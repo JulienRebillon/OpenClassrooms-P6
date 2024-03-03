@@ -112,6 +112,7 @@ body {
     position: relative;
   }
   
+
   #sortDropdown {
     list-style: none;
     position: absolute;
@@ -121,18 +122,52 @@ body {
     background-color: #901C1C;
     min-width: 210px;
     color: white;
-    display: none;
+    display: block;
     z-index: 2; /* Ensure dropdown is above other elements */
-  }
+}
+
+/* Hide all li elements except the first one */
+#sortDropdown li:not(:first-child) {
+    display: none;
+}
+
+/* Show all li elements when #sortDropdown has the active class */
+#sortDropdown.active li {
+    display: block;
+}
+
+
+#sortDropdown li:nth-child(2) {
+    border-top: 2px white solid;
+    border-bottom: 2px white solid;
+}
+
+  /* #sortDropdown {
+    list-style: none;
+    position: absolute;
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    background-color: #901C1C;
+    min-width: 210px;
+    color: white;
+    display: none;
+    z-index: 2; 
+  } */
+
+  /* Show li elements when #sortDropdown has the active class */
+/* #sortDropdown.active > li:not(:first-child) {
+    display: block;
+} */
   
   /* Hide all li elements except the first one */
-  #sortDropdown li:not(:first-child) {
+  /* #sortDropdown li:not(:first-child) {
     display: none;
-  }
+  } */
 
-  #sortDropdown.active  {
-    display: block; /* Show dropdown when active */
-  }
+  /* #sortDropdown.active  {
+    display: block; 
+  } */
   
 
 
@@ -310,7 +345,7 @@ form input {
     background-color: white;
     
     
-    z-index: 0;
+    z-index: 4;
     box-sizing: border-box;
     position: fixed;
     top: 0px;
@@ -318,7 +353,7 @@ form input {
 }
 
 .lightbox.show {
-    z-index:2;
+    z-index:4;
 }
 
 .lightbox_container {
