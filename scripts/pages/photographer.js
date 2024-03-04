@@ -12,15 +12,7 @@ async function getPhotographers() {
         const response = await fetch('Data/photographers.json');
         const data = await response.json();
 
-        // Check if 'photographers' and 'media' properties exist in the data object
-    //     photographers = data.photographers || [];
-    //     media = data.media || [];
-
-    //     return { photographers, media };
-    // } catch (error) {
-    //     console.error('Error fetching photographers data', error);
-    //     return { photographers: [], media: [] }; // Return empty arrays in case of an error
-    // }
+    
 
         // Check if 'photographers' and 'media' properties exist in the data object
         SharedData.photographers = data.photographers || [];
@@ -186,9 +178,9 @@ function displaySortedPhotos(sortedPhotos, folderName) {
     const albumSection = document.querySelector('.album');
     albumSection.innerHTML = ''; // Clear existing content
 
-    let testId = 7775342343; //test 26-02
-    //lightboxFigures.length = 0;
-    lightboxFigures.id = testId; // test 26-02
+    //let testId = 7775342343; //test 26-02
+    lightboxFigures.length = 0;
+    //lightboxFigures.id = testId; // test 26-02
 
     sortedPhotos.forEach((photo, index) => {
         const photoFigure = createPhotoFigure(photo, folderName);
@@ -212,12 +204,13 @@ function displaySortedPhotos(sortedPhotos, folderName) {
 
 
 
+// Function to reorder the dropdown menu to the selected criteria
 
 
 
 
 
-// //Function to sort photos based on the selected criteria
+//Function to sort photos based on the selected criteria
 
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownButton = document.querySelector(".custom-dropdown-btn");
@@ -236,69 +229,36 @@ document.addEventListener("DOMContentLoaded", function () {
         option.addEventListener('click', function () {
             // Handle sorting logic based on the selected value
             const value = this.getAttribute('data-value');
-            console.log('Sorting by:', value);
-            sortPhotos(value); // Call the sortPhotos function with the selected criteria
+            console.log('Sorting by (dropdown):', value);
+
+            // Call the corresponding sorting function based on the selected value
+            switch (value) {
+                case 'date':
+                    sortFiguresByDate(true); // True determine an ascending order by default
+                    break;
+                case 'title':
+                    sortFiguresByTitle(true); 
+                    break;
+                case 'likes':
+                    sortFiguresByLikes(true); 
+                    break;
+                default:
+                    console.error('Invalid sorting option:', value);
+            }
+
+          
             // Hide dropdown after selection
             dropdownMenu.classList.remove('active');
         });
     });
+
+    
 });
 
 
-// // Function to toggle the sort order
-// function toggleSortOrder(criteria) {
-//     // Check if the criteria matches the current sort criteria
-//     if (criteria === currentSortCriteria) {
-//         // If matched, toggle the sort order
-//         sortOrder[criteria] = sortOrder[criteria] === 'asc' ? 'desc' : 'asc';
-//     } else {
-//         // If not matched, set the new criteria and default to 'asc' order
-//         currentSortCriteria = criteria;
-//         sortOrder[criteria] = 'asc';
-//     }
-// }
-
-// // Function to sort photos based on the selected criteria
-// function sortPhotos(criteria) {
-//     toggleSortOrder(criteria);
-
-//     // Sort the photos based on the selected criteria
-//     const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id)
-//         .sort((a, b) => {
-//             switch (currentSortCriteria) {
-//                 case 'date':
-//                     return sortOrder.date === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
-//                 case 'likes':
-//                     return sortOrder.likes === 'asc' ? a.likes - b.likes : b.likes - a.likes;
-//                 case 'title':
-//                     return sortOrder.title === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-//                 default:
-//                     return 0;
-//             }
-//         });
-
-//     // Display the sorted photos
-//     displaySortedPhotos(sortedPhotos, folderName);
-
-//     console.log(sortOrder);
-// }
-
-// // Event listener for dropdown change
-// const sortDropdown = document.getElementById('sortDropdown');
-// sortDropdown.addEventListener('change', function () {
-//     const selectedOption = this.value;
-//     sortPhotos(selectedOption);
-// });
-
-// // Initial values
-// let currentSortCriteria = 'date'; // Initial sort criteria
-// const sortOrder = {
-//     date: 'asc',
-//     likes: 'asc',
-//     title: 'asc',
-// };
 
 
+    //logic for sorting in ascending or descending order with the caret.
 
     const caretBtn = document.getElementById('caretBtn');
     const sortDropdown = document.getElementById('sortDropdown');
@@ -315,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdownOptions.forEach(option => {
         option.addEventListener('click', function () {
             const value = this.getAttribute('data-value');
-            console.log('Sorting by:', value);
+            console.log('Sorting by (asc or des):', value);
             // Toggle 'active' class for the dropdown menu
             sortDropdown.classList.toggle('active');
         });
@@ -327,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //Function to sort according to Likes
+
 function sortFiguresByLikes(ascending) {
     const albumSection = document.querySelector('.album');
     const figures = Array.from(albumSection.querySelectorAll('figure'));
@@ -350,6 +311,67 @@ function sortFiguresByLikes(ascending) {
         albumSection.appendChild(figure);
     });
 }
+
+
+//Function to sort according to Dates
+
+function sortFiguresByDate(ascending) {
+    const albumSection = document.querySelector('.album');
+    const figures = Array.from(albumSection.querySelectorAll('figure'));
+
+    console.log('function de tri par date lancée');
+
+    figures.sort((figureA, figureB) => {
+        const dateA = new Date(figureA.getAttribute('data-date'));
+        const dateB = new Date(figureB.getAttribute('data-date'));
+
+        if (ascending) {
+            return dateA - dateB;
+        } else {
+            return dateB - dateA;
+        }
+    });
+
+    // Clear existing content
+    albumSection.innerHTML = '';
+
+    // Append sorted figures to album section
+    figures.forEach(figure => {
+        albumSection.appendChild(figure);
+    });
+}
+
+
+//Function to sort according to Titles
+
+function sortFiguresByTitle(ascending) {
+    const albumSection = document.querySelector('.album');
+    const figures = Array.from(albumSection.querySelectorAll('figure'));
+
+    figures.sort((figureA, figureB) => {
+        const titleA = figureA.querySelector('figcaption').textContent;
+        const titleB = figureB.querySelector('figcaption').textContent;
+
+        if (ascending) {
+            return titleA.localeCompare(titleB);
+        } else {
+            return titleB.localeCompare(titleA);
+        }
+    });
+
+    // Clear existing content
+    albumSection.innerHTML = '';
+
+    // Append sorted figures to album section
+    figures.forEach(figure => {
+        albumSection.appendChild(figure);
+    });
+}
+
+
+
+
+
 
 // Event listener for caretBtn
 let ascendingOrder = true; // Initial sorting order
