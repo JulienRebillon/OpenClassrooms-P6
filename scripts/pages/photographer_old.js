@@ -4,27 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //let photographers = [];
 //let media = [];
-
+const SharedData = {
+    photographers: [],
+    media: [],
+    photographerData: null,
+};
 
 
 async function getPhotographers() {
     try {
         const response = await fetch('Data/photographers.json');
         const data = await response.json();
-
-    
-
-        // Check if 'photographers' and 'media' properties exist in the data object
         SharedData.photographers = data.photographers || [];
         SharedData.media = data.media || [];
-
         return SharedData;
     } catch (error) {
         console.error('Error fetching photographers data', error);
         return SharedData; // Return shared data in case of an error
     }
-
-
 }
 
 
@@ -141,10 +138,6 @@ function createPhotoFigure(photoData, folderName, photographerData) {
 
 
 
-
-
-
-
 function mapPhotographerFolderName(photographerName) {
     // Map photographer names to folder names
     const folderNameMap = {
@@ -201,60 +194,6 @@ function displaySortedPhotos(sortedPhotos, folderName) {
         albumSection.appendChild(photoFigure);
     });
 }
-
-
-
-// Function to reorder the dropdown menu to the selected criteria
-
-
-
-
-
-//Function to sort photos based on the selected criteria
-
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdownButton = document.querySelector(".custom-dropdown-btn");
-    const dropdownMenu = document.getElementById("sortDropdown");
-    const dropdownOptions = document.querySelectorAll("#sortDropdown li");
-
-    dropdownButton.addEventListener("click", function () {
-        dropdownMenu.classList.toggle("active");
-        // Toggle visibility of all dropdown options
-        dropdownOptions.forEach(option => {
-            option.style.display = dropdownMenu.classList.contains("active") ? "block" : "none";
-        });
-    });
-
-    dropdownOptions.forEach(option => {
-        option.addEventListener('click', function () {
-            // Handle sorting logic based on the selected value
-            const value = this.getAttribute('data-value');
-            console.log('Sorting by (dropdown):', value);
-
-            // Call the corresponding sorting function based on the selected value
-            switch (value) {
-                case 'date':
-                    sortFiguresByDate(true); // True determine an ascending order by default
-                    break;
-                case 'title':
-                    sortFiguresByTitle(true); 
-                    break;
-                case 'likes':
-                    sortFiguresByLikes(true); 
-                    break;
-                default:
-                    console.error('Invalid sorting option:', value);
-            }
-
-          
-            // Hide dropdown after selection
-            dropdownMenu.classList.remove('active');
-        });
-    });
-
-    
-});
-
 
 
 
@@ -370,6 +309,98 @@ function sortFiguresByTitle(ascending) {
 
 
 
+// Function to sort photos based on the selected criteria
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdownButton = document.querySelector(".custom-dropdown-btn");
+    const dropdownMenu = document.getElementById("sortDropdown");
+    const dropdownOptions = document.querySelectorAll("#sortDropdown li");
+
+    dropdownButton.addEventListener("click", function () {
+        dropdownMenu.classList.toggle("active");
+        // Toggle visibility of all dropdown options
+        dropdownOptions.forEach(option => {
+            option.style.display = dropdownMenu.classList.contains("active") ? "block" : "none";
+        });
+    });
+
+    dropdownOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+            console.log('Sorting by:', value);
+
+            // Update button text to reflect selected option
+            dropdownButton.querySelector(".btn-text").textContent = this.textContent;
+
+            // Sort the photos based on the selected criteria
+            if (value === 'title') {
+                sortFiguresByTitle(true); // Ascending order
+            } else if (value === 'likes') {
+                sortFiguresByLikes(true); // Ascending order
+            } else if (value === 'date') {
+                sortFiguresByDate(true); // Ascending order
+            }
+
+            // Close the dropdown menu
+            dropdownMenu.classList.remove('active');
+            dropdownOptions.forEach(option => option.style.display = 'none');
+        });
+    });
+});
+
+
+
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const dropdownButton = document.querySelector(".custom-dropdown-btn");
+    //     const dropdownMenu = document.getElementById("sortDropdown");
+    //     const dropdownOptions = document.querySelectorAll("#sortDropdown li");
+    
+    //     const titleOption = document.querySelector("#sortDropdown li[data-value='title']");
+    //     const likesOption = document.querySelector("#sortDropdown li[data-value='likes']");
+    //     const dateOption = document.querySelector("#sortDropdown li[data-value='date']");
+    
+    //     dropdownButton.addEventListener("click", function () {
+    //         dropdownMenu.classList.toggle("active");
+    //         // Toggle visibility of all dropdown options
+    //         dropdownOptions.forEach(option => {
+    //             option.style.display = dropdownMenu.classList.contains("active") ? "block" : "none";
+    //         });
+    //     });
+    
+    //     titleOption.addEventListener('click', function () {
+    //         console.log('Sorting by (dropdown): title');
+    //         sortFiguresByTitle(true); // Ascending order
+    //         dropdownMenu.classList.remove('active');
+    //         dropdownOptions.forEach(option => option.style.display = 'none');
+    //         dropdownButton.querySelector(".btn-text").textContent = "Title";
+    //     });
+    
+    //     likesOption.addEventListener('click', function () {
+    //         console.log('Sorting by (dropdown): likes');
+    //         sortFiguresByLikes(true); // Ascending order
+    //         dropdownMenu.classList.remove('active');
+    //         dropdownOptions.forEach(option => option.style.display = 'none');
+    //         dropdownButton.querySelector(".btn-text").textContent = "Likes";
+    //     });
+    
+    //     dateOption.addEventListener('click', function () {
+    //         console.log('Sorting by (dropdown): date');
+    //         sortFiguresByDate(true); // Ascending order
+    //         dropdownMenu.classList.remove('active');
+    //         dropdownOptions.forEach(option => option.style.display = 'none');
+    //         dropdownButton.querySelector(".btn-text").textContent = "Date";
+    //     });
+    // });
+    
+
+
+
+
+    
+    //-------------
+
+
 
 
 
@@ -413,73 +444,66 @@ function displayTotalLikes(totalLikes, photographerPrice) {
 
 
 
+
 async function init() {
     try {
-        // Retrieve photographers' data
         const { photographers, media } = await getPhotographers();
-
         if (!photographers || photographers.length === 0) {
             console.error('No photographers found in the data');
             return;
         }
 
-        // Extract photographer's name from the URL
         const urlSearchParams = new URLSearchParams(window.location.search);
         const photographerName = urlSearchParams.get('name');
-
-        // Search array for the photographer's name
-        const photographerData = photographers.find((photographer) => {
-            console.log('Current Photographer Name:', photographer.name);
-            console.log('Target Photographer Name:', photographerName);
-            return photographer.name === photographerName;
-        });
-        
-        console.log('Found Photographer Data:', photographerData);
-        //const photographerData = photographers.find(photographer => photographer.name === photographerName);
+        const photographerData = photographers.find(photographer => photographer.name === photographerName);
 
         if (photographerData) {
-            // Assign photographerData to the module
             SharedData.photographerData = photographerData;
             SharedData.media = media;
 
             const userDetailsData = getUserDetailsData(photographerData);
-            //displayUserDetails(userDetailsData);
-            //displayUserPhoto(photographerData.portrait);
-            console.log('Before displayUserDetails:', photographerData);
             displayUserDetails(userDetailsData);
-            console.log('After displayUserDetails');
-
-            console.log('Before displayUserPhoto:', photographerData.portrait);
             displayUserPhoto(photographerData.portrait);
-            console.log('After displayUserPhoto');
 
-            const albumSection = document.querySelector('.album');
             const folderName = mapPhotographerFolderName(photographerData.name);
-
-            // Create and store photo figures in lightboxFigures array
-            const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
-            lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName, photographerData)));
-
-            // Display the sorted photos
+            const sortedPhotos = media.filter(photo => photo.photographerId === photographerData.id);
+            lightboxFigures.push(...sortedPhotos.map(photo => createPhotoFigure(photo, folderName, photographerData)));
             displaySortedPhotos(sortedPhotos, folderName);
 
-            // Calculate and display total likes
             const totalLikes = calculateTotalLikes(media, photographerData.id);
-            const photographerPrice = photographerData.price; // Assuming photographerData has a 'price' property
-            displayTotalLikes(totalLikes, photographerPrice);
+            displayTotalLikes(totalLikes, photographerData.price);
 
-            
+            const sortByLikes = document.getElementById('likes');
+            const sortByDate = document.getElementById('date');
+            const sortByTitle = document.getElementById('title');
+
+            sortByLikes.addEventListener('click', () => {
+                const ascending = sortByLikes.getAttribute('data-order') === 'asc';
+                sortFiguresByLikes(ascending);
+                sortByLikes.setAttribute('data-order', ascending ? 'desc' : 'asc');
+            });
+
+            sortByDate.addEventListener('click', () => {
+                const ascending = sortByDate.getAttribute('data-order') === 'asc';
+                sortFiguresByDate(ascending);
+                sortByDate.setAttribute('data-order', ascending ? 'desc' : 'asc');
+            });
+
+            sortByTitle.addEventListener('click', () => {
+                const ascending = sortByTitle.getAttribute('data-order') === 'asc';
+                sortFiguresByTitle(ascending);
+                sortByTitle.setAttribute('data-order', ascending ? 'desc' : 'asc');
+            });
+
         } else {
-            console.error('Photographer not found in the data');
+            console.error(`Photographer with name "${photographerName}" not found`);
         }
-
-        // After getting photographers' data, add this line to hide the photographer_section
-        const photographerSection = document.querySelector('.photographer_section');
-        photographerSection.style.display = 'none';
     } catch (error) {
-        console.error('Error initializing the page', error);
+        console.error('Error initializing photographer page', error);
     }
 }
+
+
 
 // Call the init function
 init();
