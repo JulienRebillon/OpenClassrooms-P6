@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
@@ -9,11 +9,18 @@
     <title>Fisheye - Photographe</title>
 </head>
 <body>
-    <header id="header">
-        <p>header here</p>
-    </header> <!-- Header section -->
+    <header>
+        <a href="index.html" alt="Fisheye Home">
+          <img src="assets/images/logo.png" class="logo" alt="fisheye logo with the first e replaced by a camera"/>          
+        </a>
+    </header>
 
     <main id="main">
+
+        <section id="header-profile">
+            
+        </section> <!-- Header section -->
+
         <!-- Dropdown Menu Section -->
         <section id="dropdown-menu">
             <p>dropdown menu here</p>
@@ -29,6 +36,16 @@
             <p>gallery here</p>
         </section>
 
+        <section id="global-counter">
+            <div id="total-likes">
+                <span id="total-likes-number">0</span>
+                <i class="fa fa-heart like-icon"></i>
+            </div>
+            <div id="photographer-price">
+                Price: <span id="price-amount">0</span> € / Jour
+            </div>
+        </section>
+
         <!-- Lightbox Section -->
         <section id="lightbox">
             <p>lightbox here</p>
@@ -37,10 +54,12 @@
 
     <!-- Import JavaScript files for each section -->
     <script src="scripts/utils/fetchData.js"></script>
+    <!-- <script src="scripts/utils/galleryUtils.js"></script> -->
     <script src="scripts/templates/header.js"></script>
     <script src="scripts/templates/dropdownMenu.js"></script>
     <script src="scripts/templates/contactForm.js"></script>
     <script src="scripts/templates/gallery.js"></script>
+    <script src="scripts/templates/globalCounter.js"></script>
     <script src="scripts/templates/lightbox.js"></script>
 </body>
 </html>

@@ -1,3 +1,6 @@
+// Import or define your sorting functions
+// import { sortGallery } from './galleryUtils.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const dropdownMenu = document.getElementById('dropdown-menu');
     dropdownMenu.innerHTML = `
@@ -5,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="filter_label">
                 <label for="sortDropdown">Trier Par</label>
             </div>
-            <div class="custom-dropdown">            
+            <div class="custom-dropdown">
                 <ul role="listbox" aria-labelledby="custom-DropdownBtn" class="custom-dropdown-content" id="sortDropdown">
                     <li role="option" class="filter-border" data-value="popularity">Popularité</li>
                     <li role="option" class="filter-border" data-value="date">Date</li>
@@ -19,4 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
         </div>
     `;
+
+    
+
+
+
 });

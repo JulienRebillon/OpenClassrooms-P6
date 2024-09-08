@@ -49,14 +49,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Render the header section with photographer data
-    const headerSection = document.querySelector('#header');
+    const headerSection = document.querySelector('#header-profile');
 
     if (headerSection) {
         headerSection.innerHTML = `
-            <h1>${photographer.name}</h1>
-            <p>${photographer.city}, ${photographer.country}</p>
-            <p>${photographer.tagline}</p>
-            <img src="assets/photographers/${photographer.portrait}" alt="${photographer.name}" class="photographer-header-portrait">
+            <div class="header-left">
+                <h1>${photographer.name}</h1>
+                <p class="profile-location">${photographer.city}, ${photographer.country}</p>
+                <p>${photographer.tagline}</p>
+            </div>
+            <div class="header-center">
+                <button class="contact-button" onclick="displayModal()">Contactez-moi</button>
+            </div>
+            <div class="header-right">
+                <img src="assets/photographers/${photographer.portrait}" alt="${photographer.name}" class="photographer-header-portrait">
+            </div>
         `;
     } else {
         console.error('Header section not found');
