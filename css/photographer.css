@@ -135,155 +135,63 @@ header {
 /* FILTER */
 
 .filter {
-    display:flex;
-    position: relative;
-    margin-top: 50px;
-    margin-left: 100px;
-    font-size: 24px;
-    width: 340px;
-    /*overflow:visible;*/ /* allows for overlap */
+    display: flex;
+    align-items: center;
+    position: relative; /* Position the dropdown relative to this container */
 }
 
 .filter_label {
-    width: 110px;
+    margin-right: 8px; /* Spacing between label and dropdown */
 }
 
 .custom-dropdown {
-    position: relative;
-  }
-  
+    position: relative; /* The dropdown is positioned relative to this parent */
+}
 
-  #sortDropdown {
+.caretBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px; /* Add some padding for a larger clickable area */
+    font-size: 16px;
+}
+
+.sorting-chevron {
+    margin-left: 4px; /* Space between label and caret icon */
+}
+
+.custom-dropdown-content {
+    position: absolute; /* Position it absolutely within the .custom-dropdown container */
+    background-color: white;
+    min-width: 150px;
+    border: 1px solid #ccc;
+    z-index: 10; /* Ensure it is above other elements */
+    display: none; /* Hidden by default */
     list-style: none;
-    position: absolute;
-    font-size: 24px;
-    margin: 0;
     padding: 0;
-    background-color: #901C1C;
-    min-width: 210px;
-    color: white;
-    display: block;
-    z-index: 2; /* Ensure dropdown is above other elements */
-}
-
-/* Hide all li elements except the first one */
-#sortDropdown li:not(:first-child) {
-    display: none;
-}
-
-/* Show all li elements when #sortDropdown has the active class */
-#sortDropdown.active li {
-    display: block;
-}
-
-
-#sortDropdown li:nth-child(2) {
-    border-top: 2px white solid;
-    border-bottom: 2px white solid;
-}
-
-  /* #sortDropdown {
-    list-style: none;
-    position: absolute;
-    font-size: 24px;
     margin: 0;
-    padding: 0;
-    background-color: #901C1C;
-    min-width: 210px;
-    color: white;
-    display: none;
-    z-index: 2; 
-  } */
-
-  /* Show li elements when #sortDropdown has the active class */
-/* #sortDropdown.active > li:not(:first-child) {
-    display: block;
-} */
-  
-  /* Hide all li elements except the first one */
-  /* #sortDropdown li:not(:first-child) {
-    display: none;
-  } */
-
-  /* #sortDropdown.active  {
-    display: block; 
-  } */
-  
-
-
-  #sortDropdown li {
-    padding: 10px 15px;
-  }
-  
-  .caretBtn {
-    position: absolute;
-    right: 20px;
-    height: 50px;
-    width: 50px;
-    background-color: #901C1C;
-    color: white;
-    z-index: 3; /* Ensure button is below dropdown */
-    border: 1px solid #901C1C;
-  }
-  
-  .caretBtn.active .sorting-chevron i {
-    transform: rotate(180deg);
-  }
-  
-
-/* .custom-dropdown {
-    margin: 0px;
-    padding: 0px;
-    position: relative;
-    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    max-height: 200px; /* Set a maximum height if you have many options */
+    overflow-y: auto; /* Enable scrolling if content exceeds max height */
 }
 
-#sortDropdown {
-    list-style: none;
-    position: absolute;
-    font-size: 24px;
-    margin: 0px;
-    padding-top: 0px;
-    padding-left: 15px;
-    padding-right: 15px;
-    background-color: #901C1C;
-    min-width: 180px;
-    color: white;
+.custom-dropdown-content li {
+    padding: 8px 12px; /* Spacing for list items */
+    cursor: pointer;
+    background-color: white;
 }
 
-#sortDropdown.active {
-    display: block;
+.custom-dropdown-content li:hover {
+    background-color: #f1f1f1; /* Hover background color */
 }
 
-#sortDropdown li {
-    padding-left: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.custom-dropdown-content[aria-hidden="false"] {
+    display: block; /* Show when aria-hidden is false */
 }
 
-#sortDropdown li:nth-child(2) {
-    border-top: 2px white solid;
-    border-bottom: 2px white solid;
-}
 
-.custom-dropdown-btn {
-    position: absolute;
-    right: 20px;
-    height: 50px;
-    width: 50px;
-    background-color: #901C1C;
-    color: white;
-    z-index: 2;
-    border: 1px solid #901C1C;
-}
-
-.custom-dropdown-btn.active .sorting-chevron i {
-    transform: rotate(180deg);
-}
-
-.custom-dropdown-btn.active + #sortDropdown {
-    display: block;
-} */
 
 
 

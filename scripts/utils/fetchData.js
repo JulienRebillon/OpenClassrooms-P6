@@ -2,32 +2,9 @@
 
 // Variable to store fetched data
 let data = [];
+// let sortOrder = 'likes';
 
-// // Function to fetch data from the JSON file
-// async function fetchPhotographersData() {
-//   try {
-//     // Fetch the JSON data
-//     const response = await fetch('../data/photographers.json');
-    
-//     // Check if the response is ok (status code 200-299)
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-    
-//     // Parse the JSON data
-//     data = await response.json();
 
-    
-//     // Optionally log the data to the console to verify
-//     console.log('Fetched data:', data);
-//   } catch (error) {
-//     // Log any errors to the console
-//     console.error('Error fetching data:', error);
-//   }
-// }
-
-// // Call the function to fetch data
-// fetchPhotographersData();
 
 async function fetchPhotographersData() {
     try {
