@@ -137,11 +137,14 @@ header {
 .filter {
     display: flex;
     align-items: center;
+    margin-left: 100px;
+    margin-top: 20px;
     position: relative; /* Position the dropdown relative to this container */
 }
 
 .filter_label {
-    margin-right: 8px; /* Spacing between label and dropdown */
+    margin-right: 8px; 
+    
 }
 
 .custom-dropdown {

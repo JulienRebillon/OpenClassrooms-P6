@@ -1,5 +1,5 @@
 // Declare global variables and functions at the top
-let sortOrder = "title"; // Set default sort order globally
+//let sortOrder = "likes"; // Set default sort order globally
 
 // Function to update sortOrder
 function updateSortOrder(newSortOrder) {
@@ -9,6 +9,8 @@ function updateSortOrder(newSortOrder) {
 
 // Global function to display the gallery
 function displayGallery() {
+    // check if the function is properly called
+    console.log('displayGallery called with sortOrder:', sortOrder);
     // Ensure data is loaded and photographerMedia is available
     if (!window.photographerMedia) {
         console.error('No media data available to display.');

@@ -2,7 +2,7 @@
 
 // Variable to store fetched data
 let data = [];
-// let sortOrder = 'likes';
+let sortOrder = 'likes';
 
 
 

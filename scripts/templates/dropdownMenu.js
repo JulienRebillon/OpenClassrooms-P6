@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dropdownMenu = document.getElementById('dropdown-menu');
 
     // Set initial sortOrder and default sorting text
-    let sortOrder = 'likes';
+    //let sortOrder = 'likes';
     
     dropdownMenu.innerHTML = `
         <div class="filter">
@@ -37,18 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //Function to update the sort order and the button label
+    // function updateSortOrder(sortBy) {
+    //     sortOrder = sortBy;  // Update sortOrder variable
+    //     console.log('Updated sortOrder:', sortOrder); // Log the updated sortOrder value
+    //     sortLabel.textContent = {
+    //         likes: 'Popularité',
+    //         date: 'Date',
+    //         title: 'Titre'
+    //     }[sortBy]; // Update button label based on sortOrder
+    //     if (window.displayGallery) {
+    //         window.displayGallery(); // Call function to refresh the gallery
+    //     }
+    // }
+    // Function to update the sort order and the button label
     function updateSortOrder(sortBy) {
+        console.log('Previous sortOrder:', sortOrder); // Log the previous sortOrder
         sortOrder = sortBy;  // Update sortOrder variable
         console.log('Updated sortOrder:', sortOrder); // Log the updated sortOrder value
-        sortLabel.textContent = {
-            likes: 'Popularité',
-            date: 'Date',
-            title: 'Titre'
-        }[sortBy]; // Update button label based on sortOrder
-        if (window.displayGallery) {
-            window.displayGallery(); // Call function to refresh the gallery
+        
+        // Update button label based on sortOrder
+        const sortLabel = document.querySelector('#caretBtn .sorting-chevron i');
+        if (sortLabel) {
+            sortLabel.textContent = {
+                likes: 'Popularité',
+                date: 'Date',
+                title: 'Titre'
+            }[sortBy];
+        } else {
+            console.error('Sort label element not found');
         }
+
+        // Directly call displayGallery to refresh the gallery
+        displayGallery();
     }
+
     
 
     // Event listener for caret button to toggle dropdown
