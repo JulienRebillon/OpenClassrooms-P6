@@ -139,26 +139,42 @@ header {
     align-items: center;
     margin-left: 100px;
     margin-top: 20px;
-    position: relative; /* Position the dropdown relative to this container */
+    
 }
 
 .filter_label {
-    margin-right: 8px; 
-    
+    margin-right: 8px;     
 }
 
 .custom-dropdown {
     position: relative; /* The dropdown is positioned relative to this parent */
+    background-color: #901C1C;
+    color: white;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    width: 170px;
+    height: 30px;
+
 }
 
 .caretBtn {
-    background: none;
+    color: white;
+    background-color: #D3573C;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     padding: 8px; /* Add some padding for a larger clickable area */
     font-size: 16px;
+    position:absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 15;
+    height: 38px;
+    width: 35px;
+    padding-top: 12px;
+    padding-right: 10px;
 }
 
 .sorting-chevron {
@@ -167,35 +183,46 @@ header {
 
 .custom-dropdown-content {
     position: absolute; /* Position it absolutely within the .custom-dropdown container */
-    background-color: white;
-    min-width: 150px;
+    left:0;
+    top: 0;
+    background-color: #901C1C;
+    min-width: 155px;
     border: 1px solid #ccc;
     z-index: 10; /* Ensure it is above other elements */
     display: none; /* Hidden by default */
     list-style: none;
     padding: 0;
     margin: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
-    max-height: 200px; /* Set a maximum height if you have many options */
-    overflow-y: auto; /* Enable scrolling if content exceeds max height */
+    
 }
 
-.custom-dropdown-content li {
-    padding: 8px 12px; /* Spacing for list items */
-    cursor: pointer;
-    background-color: white;
-}
-
-.custom-dropdown-content li:hover {
-    background-color: #f1f1f1; /* Hover background color */
-}
 
 .custom-dropdown-content[aria-hidden="false"] {
     display: block; /* Show when aria-hidden is false */
+    background-color: #901C1C;
+    padding: 8px 12px; /* Spacing for list items */
+    cursor: pointer;
+    
 }
 
+.custom-dropdown-content li {
+    background-color: #901C1C;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
+}
+.custom-dropdown-content li:not(:last-child) {
+    border-bottom: 1px solid #ccc; /* Add a bottom border to all but the last item */
+}
 
+/* Chevron animation */
+.sorting-chevron i {
+    transition: transform 0.3s ease; 
+}
 
+.sorting-chevron.asc {
+    transform: rotate(180deg);
+}
 
 
 
@@ -213,7 +240,7 @@ header {
 }
 
 .gallery-item {
-    width: 25%;
+    width: 350px;
     height: 20%;
     margin-bottom: 50px;
     margin-left: 0;
@@ -231,33 +258,143 @@ header {
     object-fit: cover;
 }
 
-.gallery-item .text-container {
+
+
+.mediaContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.gallery-item .figure-likes {
-    display: flex;
-}
-
-.like-count p, .text-container {
     color: #901C1C;
     padding-right: 10px;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 18px;
 }
 
-.figure-button {
-    border: none;
-    background-color: white;
-    color: #901C1C;
-}
+
 
 
 /* FORM */
 
-form {
+.wrapper{
+    z-index: 10;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.modal_form {
+    position: relative;
+    border-radius: 5px;
+    background-color: #DB8876;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    opacity: 0.5;
+    transform: translateY(-150px);
+    animation: fadeIn .3s ease-in-out forwards;
+}
+
+.modal_form_title{
+    width: 100%;
+    font-size: 24px;
+}
+
+.modal_form_title h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+.btn_close:hover::before{
+    color: var(--color-primary);
+}
+.btn_close:focus:not(:hover)::before{
+    outline: 2px solid var(--color-primary);
+}
+
+.btn_close::before{
+    content: "\f00d";
+    font-family: "Font Awesome 5 Free";
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 900;
+    color: var(--color-light);
+    font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.modal_form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.form_content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form_content label {
+    color: var(--color-label);
+    font-size: clamp(1.8rem, 2vw, 2rem);
+}
+
+.form_content input {
+    height: 50px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.form_content textarea {
+    border-radius: 5px;
+    height: 150px;
+    resize: none;
+    padding: 10px;
+}
+
+.form_content span{
+    color: var(--color-dark);
+    font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+}
+
+.form_content input:invalid:focus,
+.form_content textarea:invalid:focus {
+    outline: 2px solid var(--color-primary);
+} 
+
+.btn_submit{
+    max-width: 150px;
+}
+
+.btn_submit:hover,
+.btn_submit:focus {
+    outline: 2px solid var(--color-light);
+}
+
+
+/* #contact_modal{
+    z-index:20;
+    width: 600px;
+    height: 900px;
+    background-color: #DB8876;
+}
+
+.modal {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -282,7 +419,16 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
-}
+} */
+
+/* Modal background */
+
+  
+
+
+
+
+
 
 
 /* LIGHTBOX */

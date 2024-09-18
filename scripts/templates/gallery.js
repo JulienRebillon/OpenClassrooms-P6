@@ -75,8 +75,10 @@ function createGalleryItem(media) {
         mediaPath = `assets/images/${photographerFolder}/${media.image}`;
         item.innerHTML = `
             <img src="${mediaPath}" alt="${media.title}" class="gallery-image">
+            <div class="mediaContainer">
             <h3 class="media-title">${media.title}</h3>
             <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
+            </div>
         `;
     } else if (media.video) {
         mediaPath = `assets/images/${photographerFolder}/${media.video}`;
@@ -84,8 +86,10 @@ function createGalleryItem(media) {
             <video controls class="gallery-video">
                 <source src="${mediaPath}" type="video/mp4">
             </video>
-            <h3 class="media-title">${media.title}</h3>
-            <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
+            <div class="mediaContainer">
+                <h3 class="media-title">${media.title}</h3>
+                <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
+            </div>
         `;
     }
 

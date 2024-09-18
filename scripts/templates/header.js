@@ -1,27 +1,3 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     function createHeader(photographer) {
-//         const header = document.getElementById('header');
-//         header.innerHTML = `
-//             <a href="index.html">
-//                 <img src="assets/images/logo.png" class="logo" alt="FishEye logo"/>
-//                 <span class="sr-only">Retour à la plage d'accueil</span>
-//             </a>
-//             <div class="photograph-header">
-//                 <h1>${photographer.name}</h1>
-//                 <p>${photographer.city}, ${photographer.country}</p>
-//                 <p>${photographer.tagline}</p>
-//                 <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-//                 <img src="assets/photographers/${photographer.portrait}" class="photographer-portrait" alt="${photographer.name}">
-//             </div>
-//         `;
-//     }
-
-//     // Fetch photographer data and create the header
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const photographerId = urlParams.get('id');
-//     const photographer = data.photographers.find(p => p.id == photographerId);
-//     createHeader(photographer);
-// });
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Ensure data is loaded
@@ -59,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p>${photographer.tagline}</p>
             </div>
             <div class="header-center">
-                <button class="contact-button" onclick="displayModal()">Contactez-moi</button>
+                <button class="contact-button">Contactez-moi</button>
             </div>
             <div class="header-right">
                 <img src="assets/photographers/${photographer.portrait}" alt="${photographer.name}" class="photographer-header-portrait">
