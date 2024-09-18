@@ -1,141 +1,78 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     // wait for the page to be fuly loaded.
+const displayLightbox = medias => {
 
+    const lightboxWrapper = document.querySelector('.lightbox_wrapper');
+    const btnClose = document.querySelector('.btn_close_lightbox');
+    const btnPrevious = document.querySelector('.btn_previous');
+    const btnNext = document.querySelector('.btn_next');
+    const lightboxMedia = document.querySelector('.lightbox_media');
+    const mediaProvider = Array.from(document.querySelectorAll('.gallery_card a'));
 
+    const photographer = medias.photographer;
+    const mediasList = medias.medias;
+    let currentIndex = 0; 
 
-function updateLightboxContent(index, lightboxFigures) {
-    const lightboxContent = document.querySelector('.lightbox_content');
-    lightboxContent.innerHTML = ''; // Clear existing content
+    mediaProvider.forEach(media => {
+        media.addEventListener('click', () => {
+            const mediaId = media.dataset.media;
+            const mediaIndex = mediasList.findIndex(media => media.id == mediaId);
+            currentIndex = mediaIndex;
+            lightboxWrapper.style.display = 'flex';
+            btnClose.focus();
+            lightboxTemplate();
+        });
+    });
+        
+    const lightboxTemplate = () => {
+        const currentMedia = mediasList[currentIndex];
+        
+        lightboxMedia.innerHTML = `
+            ${currentMedia.image ? `
+            <img src="./assets/images/photographers/samplePhotos-Medium/${photographer.name}/${currentMedia.image}" alt="${currentMedia.alt}">` : 
+            `<video controls aria-label="${currentMedia.alt}"><source src="./assets/images/photographers/samplePhotos-Medium/${photographer.name}/${currentMedia.video}" type="video/mp4"></video>`}
 
-    if (lightboxFigures.length > 0 && index >= 0 && index < lightboxFigures.length) {
-        // Create a clone of the figure, fixes the issue with disappearing figures. 
-        const clonedFigure = lightboxFigures[index].cloneNode(true);
-        lightboxContent.appendChild(clonedFigure);
-    }
-}
+            <figcaption>${currentMedia.title}</figcaption>
+        `;
+    };
+    
+    const closeLightbox = () => {
+        lightboxWrapper.style.display = 'none';
+        lightboxMedia.innerHTML = '';
+    };
 
+    const nextMedia = () => {
+        currentIndex++;
+        if (currentIndex > mediasList.length - 1) currentIndex = 0;
+        lightboxTemplate();
+        showActiveBtn(btnNext);
+    };
 
+    const previousMedia = () => {
+        currentIndex--;
+        if (currentIndex < 0) currentIndex = mediasList.length - 1;
+        lightboxTemplate();
+        showActiveBtn(btnPrevious);
+    };
 
-// function updateLightboxContent() {
-//     const lightboxContent = document.querySelector('.lightbox_content');
-//     lightboxContent.innerHTML = ''; // Clear existing content
+    const showActiveBtn = btn => {
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 100);
+    };        
+        
+    document.addEventListener('keyup', e => {
+        switch(e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                previousMedia();
+                break;
+            case 'ArrowRight':
+                nextMedia();
+                break;
+        };
+    });
 
-
-//     if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
-//         //create a clone of the figure, fixes the issue with disappearing figures. 
-//         const clonedFigure = lightboxFigures[currentImageIndex].cloneNode(true);
-//         lightboxContent.appendChild(clonedFigure);
-//     }
-
-//     // if (lightboxFigures.length > 0 && currentImageIndex >= 0 && currentImageIndex < lightboxFigures.length) {
-//     //     lightboxContent.appendChild(lightboxFigures[currentImageIndex]);
-//     // }
-// }
-
-
-function closeLightbox() {
-    const lightbox = document.getElementById("lightbox");
-    lightbox.style.display = 'none';
-
-    // Access photographerData and media from SharedData
-    const photographerData = SharedData.photographerData;
-    const media = SharedData.media;
-
-    // Check if photographerData and media are defined before using them
-    if (photographerData && media) {
-        // Repopulate lightboxFigures with the figures to be displayed
-        const folderName = mapPhotographerFolderName(photographerData.name);
-        const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
-        lightboxFigures.length = 0; // Clear the LightboxFigures array
-        lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName)));
-
-        console.log('lightboxFigures:', lightboxFigures);
-        console.log('currentImageIndex:', currentImageIndex);
-    }
-
-    // Clear the LightboxFigures array
-    lightboxFigures.length = 0;
-}
-
-// function closeLightbox() {
-//     const lightbox = document.getElementById("lightbox");
-//     lightbox.style.display = 'none';
-
-//     // Access photographerData and media from SharedData
-//     const photographerData = SharedData.photographerData;
-//     const media = SharedData.media;
-
-//     // Check if photographerData and media are defined before using them
-//     if (photographerData && media) {
-//         // Repopulate lightboxFigures with the figures to be displayed
-//         const folderName = mapPhotographerFolderName(photographerData.name);
-//         const sortedPhotos = media.filter((photo) => photo.photographerId === photographerData.id);
-//         lightboxFigures.length = 0; // Clear the LightboxFigures array
-//         lightboxFigures.push(...sortedPhotos.map((photo) => createPhotoFigure(photo, folderName)));
-
-//         console.log('lightboxFigures:', lightboxFigures);
-//         console.log('currentImageIndex:', currentImageIndex);
-//     }
-
-//     // Clear the LightboxFigures array
-//     lightboxFigures.length = 0;
-// }
-
-
-function showPreviousImage() {
-    currentImageIndex = (currentImageIndex - 1 + lightboxFigures.length) % lightboxFigures.length;
-    updateLightboxContent();
-}
-
-function showNextImage() {
-    currentImageIndex = (currentImageIndex + 1) % lightboxFigures.length;
-    updateLightboxContent();
-}
-
-// function displayLightbox(index, photographerData) {
-//     currentImageIndex = index;
-//     updateLightboxContent();
-//     lightbox.style.display = 'block';
-//     // Add the show class to change the z-index value
-//     lightbox.classList.add('show');
-
-//     // Pass photographerData to closeLightbox function
-//     const lightboxCloseButton = document.querySelector('.lightbox-close');
-//     if (lightboxCloseButton) {
-//         lightboxCloseButton.addEventListener('click', () => closeLightbox(photographerData));
-//     }
-
-//     // Assuming photographerData is available where you are calling displayLightbox
-//     SharedData.photographerData = photographerData; 
-// }
-
-function displayLightbox(index, lightboxFigures) {
-    currentImageIndex = index;
-    updateLightboxContent(index, lightboxFigures); // Pass lightboxFigures as an argument
-    lightbox.style.display = 'block';
-    // Add the show class to change the z-index value
-    lightbox.classList.add('show');
-
-    // Pass photographerData to closeLightbox function
-    const lightboxCloseButton = document.querySelector('.lightbox-close');
-    if (lightboxCloseButton) {
-        lightboxCloseButton.addEventListener('click', () => closeLightbox(photographerData));
-    }
-
-    // Assuming photographerData is available where you are calling displayLightbox
-    SharedData.photographerData = photographerData; 
-}
-
-
-
-// Event listeners for navigation
-//document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-// Event listener for closing the lightbox
-const lightboxCloseButton = document.querySelector('.lightbox-close');
-if (lightboxCloseButton) {
-    lightboxCloseButton.addEventListener('click', closeLightbox);
+    btnPrevious.addEventListener('click', () => previousMedia());
+    btnNext.addEventListener('click', () => nextMedia());
+    btnClose.addEventListener('click', () => closeLightbox());
 };
-document.querySelector('.arrowLeft').addEventListener('click', showPreviousImage);
-document.querySelector('.arrowRight').addEventListener('click', showNextImage);
-
-// });

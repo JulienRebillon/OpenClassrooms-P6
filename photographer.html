@@ -52,7 +52,7 @@
                     </div>
                     <div class="form_content">
                         <label id="message-label" for="message">Votre message <span aria-hidden="true">*</span></label>
-                        <textarea class="formField" aria-labelledby="message-label" id="message" name="message" maxlength="200" data-error="Votre message doit contenir entre 20 et 200 caractères." required></textarea>
+                        <textarea class="formField" aria-labelledby="message-label" id="message" name="message" maxlength="500" data-error="Votre message doit contenir entre 20 et 500 caractères." required></textarea>
                         <span></span>
                     </div>
                     <button class="btn btn_submit" type="submit" aria-label="Send">Envoyer</button>
@@ -78,7 +78,14 @@
 
         <!-- Lightbox Section -->
         <section id="lightbox">
-            <p>lightbox here</p>
+            <div class="lightbox_wrapper wrapper" aria-modal="true" role="dialog">
+                <div class="lightbox" aria-label="Media closeup view">
+                    <button class="btn_close_lightbox btn_close" aria-label="Close dialog"></button>
+                    <button class="btn_next" aria-label="Next media"></button>
+                    <button class="btn_previous" aria-label="Previous media"></button>
+                    <figure class="lightbox_media" role="media" aria-label="Current Media"></figure>
+                </div> 
+            </div>
         </section>
     </main>
 
@@ -87,10 +94,10 @@
     <!-- <script src="scripts/utils/galleryUtils.js"></script> -->
     <script src="scripts/templates/header.js"></script>
     
-    <script src="scripts/templates/contactForm.js" type="module" defer></script>
+    <script src="scripts/templates/contactForm.js" defer></script>
     <script src="scripts/templates/gallery.js"></script>
     <script src="scripts/templates/dropdownMenu.js"></script>
     <script src="scripts/templates/globalCounter.js"></script>
-    <script src="scripts/templates/lightbox.js"></script>
+    <!-- <script src="scripts/templates/lightbox.js"></script> -->
 </body>
 </html>
