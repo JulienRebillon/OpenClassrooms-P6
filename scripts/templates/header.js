@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Render the header section with photographer data
     const headerSection = document.querySelector('#header-profile');
 
+    const formName = document.querySelector(".modal_form_name");
+        formName.textContent = photographer.name;
+
     if (headerSection) {
         headerSection.innerHTML = `
             <div class="header-left">
