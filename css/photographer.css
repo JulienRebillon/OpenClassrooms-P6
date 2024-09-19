@@ -150,17 +150,17 @@ header {
     position: relative; /* The dropdown is positioned relative to this parent */
     background-color: #901C1C;
     color: white;
-    padding-left: 10px;
-    padding-top: 5px;
+    padding-left: 15px;
+    padding-top: 8px;
     padding-bottom: 3px;
-    width: 170px;
-    height: 30px;
+    width: 165px;
+    height: 32px;
 
 }
 
 .caretBtn {
     color: white;
-    background-color: #D3573C;
+    background-color: #901C1C;
     border: none;
     cursor: pointer;
     display: flex;
@@ -169,7 +169,7 @@ header {
     font-size: 16px;
     position:absolute;
     right: 0px;
-    top: 0px;
+    top: 1px;
     z-index: 15;
     height: 38px;
     width: 35px;
@@ -179,6 +179,11 @@ header {
 
 .sorting-chevron {
     margin-left: 4px; /* Space between label and caret icon */
+}
+
+.sorting-chevron i.asc {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease;
 }
 
 .custom-dropdown-content {
@@ -288,9 +293,7 @@ header {
     background-color: rgba(0,0,0,0.8); 
 }
 
-.modal_wrapper {
-    /* display: none; Modal closed by default */
-}
+
 
 .modal_form {
     position: relative;

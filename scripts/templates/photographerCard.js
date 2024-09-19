@@ -56,29 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
 
-    // // Function to display all photographer cards
-    // function displayPhotographerCards() {
-    //     // Get the photographer section from the DOM
-    //     const photographerSection = document.querySelector('.photographer_section');
-        
-    //     // // Check if the photographer section exists
-    //     // if (!photographerSection) {
-    //     //     console.error('Photographer section not found');
-    //     //     return;
-    //     // }
-
-    //     // // Check if data is loaded
-    //     // if (!data || !data.photographers) {
-    //     //     console.error('Data not loaded or data.photographers is undefined');
-    //     //     return;
-    //     // }
-
-    //     // Loop through each photographer and create a card
-    //     data.photographers.forEach(photographer => {
-    //         const card = createPhotographerCard(photographer);
-    //         photographerSection.appendChild(card);
-    //     });
-    // }
 
     // Call the function to display the photographer cards
     displayPhotographerCards();

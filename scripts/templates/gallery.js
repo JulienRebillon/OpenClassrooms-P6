@@ -1,5 +1,4 @@
-// Declare global variables and functions at the top
-//let sortOrder = "likes"; // Set default sort order globally
+
 
 // Function to update sortOrder
 function updateSortOrder(newSortOrder) {
@@ -8,17 +7,17 @@ function updateSortOrder(newSortOrder) {
 }
 
 // Global function to display the gallery
-function displayGallery() {
-    // check if the function is properly called
-    console.log('displayGallery called with sortOrder:', sortOrder);
+function displayGallery(sortOrder = 'likes', sortDirection = 'desc') {
+    console.log('displayGallery called with sortOrder:', sortOrder, 'sortDirection:', sortDirection);
+
     // Ensure data is loaded and photographerMedia is available
     if (!window.photographerMedia) {
         console.error('No media data available to display.');
         return;
     }
 
-    // Sort the media items based on the current sort order
-    photographerMedia = sortGallery(photographerMedia, sortOrder);
+    // Sort the media items based on the current sort order and direction
+    photographerMedia = sortGallery(photographerMedia, sortOrder, sortDirection);
 
     // Get the gallery section from the DOM
     const gallerySection = document.querySelector('#gallery');
@@ -42,27 +41,38 @@ function displayGallery() {
     updateGlobalCounter();
 }
 
-// Function to sort the gallery based on the sort order
-function sortGallery(mediaItems, sortBy) {
+
+// Function to sort the gallery based on the sort order and direction
+function sortGallery(mediaItems, sortBy, sortDirection = 'desc') {
     return mediaItems.sort((a, b) => {
-        let orderValue = 'likes';
+        let comparison = 0;
         switch (sortBy) {
             case 'likes':
-                
-                orderValue = 'likes';
-                return b.likes - a.likes; // Descending order of likes
+                comparison = b.likes - a.likes; // Descending order of likes
+                break;
             case 'title':
-                orderValue = 'title';
-                return a.title.localeCompare(b.title); // Ascending alphabetical order
+                comparison = a.title.localeCompare(b.title); // Ascending alphabetical order
+                break;
             case 'date':
-                orderValue = 'date';
-                return new Date(b.date) - new Date(a.date); // Descending order of date
+                comparison = new Date(b.date) - new Date(a.date); // Descending order of date
+                break;
             default:
-                
-                return 0; // No sorting if an unrecognized sort order is provided
+                comparison = 0; // No sorting if an unrecognized sort order is provided
+                break;
         }
+
+        // If sortDirection is 'asc', reverse the comparison result
+        if (sortDirection === 'asc') {
+            comparison = -comparison;
+        }
+
+        return comparison;
     });
 }
+
+
+
+
 
 // Function to create a gallery item
 function createGalleryItem(media) {
