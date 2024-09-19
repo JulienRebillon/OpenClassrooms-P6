@@ -288,6 +288,10 @@ header {
     background-color: rgba(0,0,0,0.8); 
 }
 
+.modal_wrapper {
+    /* display: none; Modal closed by default */
+}
+
 .modal_form {
     position: relative;
     border-radius: 5px;
@@ -316,23 +320,34 @@ header {
     align-items: center;
     font-weight: normal;
     font-size: 48px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-.btn_close:hover::before{
-    color: var(--color-primary);
+.modal_form_name {
+    font-size: 48px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
 }
-.btn_close:focus:not(:hover)::before{
-    outline: 2px solid var(--color-primary);
+
+.btn_close {
+    border: none;
+    background-color: #DB8876;
 }
+
+.btn_close:hover {
+    cursor: pointer;
+}
+
 
 .btn_close::before{
     content: "\f00d";
     font-family: "Font Awesome 5 Free";
-    padding: 5px;
-    border-radius: 5px;
-    font-weight: 900;
-    color: var(--color-light);
-    font-size: clamp(2rem, 3vw, 3rem);
+    padding: 10px;
+    font-weight: 600;
+    color: white;
+    font-size: 48px;
 }
 
 .modal_form form {
@@ -349,8 +364,8 @@ header {
 }
 
 .form_content label {
-    color: var(--color-label);
-    font-size: clamp(1.8rem, 2vw, 2rem);
+    color: black;
+    font-size: 32px;
 }
 
 .form_content input {
@@ -368,22 +383,23 @@ header {
 }
 
 .form_content span{
-    color: var(--color-dark);
-    font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+    color: black;
+    font-size: 24px;
 }
-
-.form_content input:invalid:focus,
-.form_content textarea:invalid:focus {
-    outline: 2px solid var(--color-primary);
-} 
 
 .btn_submit{
-    max-width: 150px;
+    width: 170px;
+    height: 69px;
+    border-radius: 5px;
+    background-color: #901C1C;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
 }
 
-.btn_submit:hover,
-.btn_submit:focus {
-    outline: 2px solid var(--color-light);
+.btn_submit:hover {
+    cursor: pointer;
 }
 
 

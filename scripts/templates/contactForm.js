@@ -1,51 +1,33 @@
-// contactForm.js
-
-    // // Call fetchPhotographersData and then update the photographer's name
-    // fetchPhotographersData().then(() => {
-    //     updatePhotographerName(); // Call updatePhotographerName after data is loaded
-    // }).catch(error => {
-    //     console.error('Error fetching photographers data:', error);
-    // });
-
-    // const updatePhotographerName = () => {
-    //     const params = new URLSearchParams(window.location.search);
-    //     const photographerId = params.get('id'); 
-    //     const photographerNameElement = document.querySelector('.modal_form_name');
-
-    //     if (typeof data === 'undefined' || !data.photographers) {
-    //         console.error('Data not loaded or photographers array is missing');
-    //         return;
-    //     }
-
-    //     // Access the photographers array within Data
-    //     const photographer = data.photographers.find(p => p.id == photographerId); // Use '==' to compare string and number
-
-    //     if (photographer) {
-    //         // Set the photographer's name in the modal
-    //         photographerNameElement.textContent = photographer.name;
-    //     } else {
-    //         // If not found, set a default message or handle the error
-    //         photographerNameElement.textContent = "Photographer not found";
-    //     }
-    // };
-
-
+    
+    
+   
+    
     const openCloseFormContact = () => {
-        const contactBtn = document.querySelector(".contact-button");
-        const contactModal = document.querySelector(".modal_wrapper");
-        const closeModal = document.querySelector(".btn_close");
-
-        if (contactBtn && contactModal && closeModal) {
-            contactBtn.addEventListener("click", () => {
-                contactModal.style.display = "flex";
-                closeModal.focus();
-            });
-
-            closeModal.addEventListener("click", () => contactModal.style.display = "none");
-        } else {
-            console.error("One or more elements are missing for openCloseFormContact.");
-        }
+        setTimeout(() => { //timeout required to deal with contact-button not being generated in time.
+            const contactBtn = document.querySelector(".contact-button");
+            const contactModal = document.querySelector(".modal_wrapper");
+            const closeModal = document.querySelector(".btn_close");
+    
+            if (contactBtn && contactModal && closeModal) {
+                contactBtn.addEventListener("click", () => {
+                    contactModal.style.display = "flex";
+                    closeModal.focus();
+                });
+    
+                closeModal.addEventListener("click", () => contactModal.style.display = "none");
+            } else {
+                console.error("One or more elements are missing for openCloseFormContact.");
+            }
+        }, 200); // Adjust delay as needed
     };
+
+    const waitForContactButton = setInterval(() => {
+        const contactBtn = document.querySelector(".contact-button");
+        if (contactBtn) {
+            openCloseFormContact();  // Call the function when the button exists
+            clearInterval(waitForContactButton);  // Stop the interval
+        }
+    }, 100); // Check every 100ms
 
     const validateForm = () => {
         const form = document.querySelector('.modal_form form');
@@ -109,7 +91,12 @@
 
 // Call the functions once the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+
+    const contactModal = document.querySelector(".modal_wrapper");
+    if (contactModal) {
+        contactModal.style.display = "none"; // Ensure modal is hidden when page loads
+    }
+
     openCloseFormContact();
     validateForm();
-    // updatePhotographerName();
 });

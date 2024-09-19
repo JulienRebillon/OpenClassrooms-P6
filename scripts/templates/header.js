@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <img src="assets/photographers/${photographer.portrait}" alt="${photographer.name}" class="photographer-header-portrait">
             </div>
         `;
+       
     } else {
         console.error('Header section not found');
     }
