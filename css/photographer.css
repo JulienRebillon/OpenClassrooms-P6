@@ -415,116 +415,121 @@ header {
 
 /* LIGHTBOX */
 
-.lightbox{
-    position: relative;
+/* LIGHTBOX */
+#lightbox {
+    display: none; /* Initially hidden */
+    flex-direction: column;
+    align-items: center;    
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1200px;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px;
+    color: white;
+}
+
+.lightbox_wrapper {
+    width: 100%;
+    height: 1000px;
+    position: relative; 
+}
+
+.lightbox_body {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 1000px;
-    height: 90%;
-    max-height: 1000px;
-    background-color: #fff;
-    padding: 25px 60px 0;
-    border-radius: 5px;
-    opacity: 0;
+    height: 100%;
+    position: relative; 
 }
 
-.lightbox_media{
+.lightbox img {
+    max-width: 100%;
+    max-height: 80vh; /* Limit image height to 80% of viewport */
+    object-fit: contain;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox .title {
+    margin-top: 10px;
+    font-size: 32px;
+    text-align: left;
+    color: #901C1C;
+}
+
+/* General button styling (Next, Previous, and Close) */
+.lightbox_body .btn_close_lightbox,
+.lightbox_body .btn_previous,
+.lightbox_body .btn_next {
+    background-color: white;
+    border: none;
+    color: #901C1C;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1005;
+}
+
+/* Close button */
+.btn_close_lightbox {
+    top: 20px;
+    right: 20px; /* Position close button in the top-right corner */
+}
+
+.btn_close_lightbox::before {
+    font-size: 48px;
+    color: #901C1C;
+}
+
+/* Previous and next buttons */
+.btn_previous,
+.btn_next {
+    top: 50%; 
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+
+.btn_next {
+    right: 20px;
+}
+
+
+.btn_previous {
+    left: 20px;
+}
+
+/* Icon styling for the next and previous buttons */
+.btn_next i,
+.btn_previous i {
+    font-size: 48px;
+    color: #901C1C;
+}
+
+/* Media container inside the lightbox */
+.lightbox_media {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-
-.lightbox_media figcaption{
-    display: flex;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 50px;
-    font-size: 24px;
-    color: #901C1C;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    position: relative;
 }
 
 .lightbox_media img,
-.lightbox_media video{
+.lightbox_media video {
     width: 100%;
-    height: calc(100% - 50px);
+    max-height: calc(100% - 50px);
+    object-fit: contain;
 }
 
-.lightbox_media video:focus{
-    outline: 2px solid #901C1C;
-}
 
-.btn_close_lightbox{
-    z-index: 100;
-    position: absolute;
-    top: 25px;
-    right: 5px; 
-}
-
-.btn_close_lightbox::before{
-    font-size: 24px;
-    color: #901C1C;
-}
-
-.btn_previous,
-.btn_next{
-    z-index: 100;
-    position: absolute;
-    top: 50%;
-    border-radius: 5px;
-    transform: translateY(-50%);
-    padding: 5px;
-}
-
-.btn_next{
-    right: 10px;
-}
-
-.btn_previous{
-    left: 10px;
-}
-
-.btn_next::before,
-.btn_previous::before{
-    font-weight: 900;   
-    font-size: 24px;
-    color: #901C1C;
-}
-
-.btn_next::before{
-    content: "\f054";
-}
-
-.btn_previous::before{
-    content: "\f053";
-}
-
-.btn_previous:focus-visible:not(:hover),
-.btn_next:focus-visible:not(:hover){
-    outline: 2px solid #901C1C;
-}
-
-.btn_previous:hover::before,   
-.btn_next:hover::before,
-.btn_close_lightbox:hover::before{
-    color: #DB8876;
-}
-
-.invalid{
-    outline: 2px solid #901C1C;
-}
-
-.valid{
-    outline: 2px solid green;
-}
-
-.btn_next.active::before,
-.btn_previous.active::before,
-.btn_close_lightbox.active::before{
-    color: #DB8876;
-}
 
 
 

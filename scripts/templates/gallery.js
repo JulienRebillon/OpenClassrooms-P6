@@ -84,18 +84,22 @@ function createGalleryItem(media) {
     if (media.image) {
         mediaPath = `assets/images/${photographerFolder}/${media.image}`;
         item.innerHTML = `
-            <img src="${mediaPath}" alt="${media.title}" class="gallery-image">
+            <div class="gallery-card" data-media="${media.id}">
+                <img src="${mediaPath}" alt="${media.title}" class="gallery-image">
+            </div>
             <div class="mediaContainer">
-            <h3 class="media-title">${media.title}</h3>
-            <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
+                <h3 class="media-title">${media.title}</h3>
+                <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
             </div>
         `;
     } else if (media.video) {
         mediaPath = `assets/images/${photographerFolder}/${media.video}`;
         item.innerHTML = `
-            <video controls class="gallery-video">
-                <source src="${mediaPath}" type="video/mp4">
-            </video>
+            <div class="gallery-card" data-media="${media.id}">
+                <video controls class="gallery-video">
+                    <source src="${mediaPath}" type="video/mp4">
+                </video>
+            </div>
             <div class="mediaContainer">
                 <h3 class="media-title">${media.title}</h3>
                 <p class="media-likes"><span class="like-count">${media.likes}</span> <i class="fa fa-heart like-icon"></i></p>
@@ -110,9 +114,10 @@ function createGalleryItem(media) {
         updateGlobalCounter(); // Update total likes counter
     });
 
-    // Return the gallery item element
     return item;
 }
+
+
 
 // Function to update the global counter with total likes and photographer's price
 function updateGlobalCounter() {

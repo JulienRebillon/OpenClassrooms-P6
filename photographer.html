@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
     <title>Fisheye - Photographe</title>
 </head>
@@ -78,14 +77,21 @@
 
         <!-- Lightbox Section -->
         <section id="lightbox">
-            <!-- <div class="lightbox_wrapper wrapper" aria-modal="true" role="dialog">
-                <div class="lightbox" aria-label="Media closeup view">
+            <div class="lightbox_wrapper" aria-modal="true" role="dialog">
+                <div class="lightbox_body" aria-label="Media closeup view">
                     <button class="btn_close_lightbox btn_close" aria-label="Close dialog"></button>
-                    <button class="btn_next" aria-label="Next media"></button>
-                    <button class="btn_previous" aria-label="Previous media"></button>
+
+                    <button class="btn_next" aria-label="Next media">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <button class="btn_previous" aria-label="Previous media">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
                     <figure class="lightbox_media" role="media" aria-label="Current Media"></figure>
                 </div> 
-            </div> -->
+            </div>
         </section>
     </main>
 
@@ -98,6 +104,6 @@
     <script src="scripts/templates/gallery.js"></script>
     <script src="scripts/templates/dropdownMenu.js"></script>
     <script src="scripts/templates/globalCounter.js"></script>
-    <!-- <script src="scripts/templates/lightbox.js"></script> -->
+    <script src="scripts/templates/lightbox.js"></script>
 </body>
 </html>

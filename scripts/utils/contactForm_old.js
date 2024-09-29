@@ -16,19 +16,7 @@ const first = document.getElementById('first');
 const last = document.getElementById('last');
 const email = document.getElementById('email');
 const message = document.getElementById('message');
-
-
-
 const form = document.querySelector('form');
-
-// form.addEventListener('keydown', e => { //prevents enter key from submitting the form
-//     if (e.key === 'Enter' && e.target.nodeName !== 'TEXTAREA') {
-//         e.preventDefault();
-//     }
-// });
-
-
-
 
 form.addEventListener('submit', e => { //empeche le rafraichissement par défaut du navigateur
 
@@ -66,10 +54,18 @@ const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
 const validateInputs = () => { //on utilise trim pour enlever les espaces superflus
+    
+    let firstValidate = false;
+    let lastValidate = false;
+    let emailValidate = false;
+    let messageValidate = false;
+  
     const firstValue = first.value.trim();
     const lastValue = last.value.trim();
     const emailValue = email.value.trim();
     const messageValue = message.value.trim();
+
+    
   
     // Prénom
     if (firstValue.length <= 1) {
@@ -116,10 +112,10 @@ const validateInputs = () => { //on utilise trim pour enlever les espaces superf
     //validate all inputs and display in console.log
     if ( firstValidate === true && lastValidate === true 
       && emailValidate === true && messageValidate === true 
-      ) {console.log("First name: " + firstNameInput.value + "\n" +
-        "Last name: " + lastNameInput.value + "\n" +
-        "Email: " + emailInput.value + "\n" +
-        "Message: " + messageInput.value);      
+      ) {console.log("First name: " + first.value + "\n" +
+                    "Last name: " + last.value + "\n" +
+                    "Email: " + email.value + "\n" +
+                    "Message: " + message.value);      
       
       closeModal();
       

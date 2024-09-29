@@ -13,6 +13,10 @@ async function fetchPhotographersData() {
 
         // Ensure the data is globally accessible
         window.data = jsonData; // Make the data available globally
+
+        // Dispatch the custom event to signal that data has been loaded
+        document.dispatchEvent(new Event('dataLoaded'));
+
         return jsonData; // Return the data as a promise
     } catch (error) {
         console.error('Error fetching photographers data:', error);
