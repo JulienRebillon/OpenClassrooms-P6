@@ -107,9 +107,19 @@ function createGalleryItem(media) {
         `;
     }
 
+    // Initialize a 'liked' state for each media item (starts as false)
+    let liked = false;
+
     // Attach event listener for the like button
     item.querySelector('.like-icon').addEventListener('click', () => {
-        media.likes += 1;
+
+        if (liked) {
+            media.likes -= 1; // Decrement the like count if already liked
+        } else {
+            media.likes += 1; // Increment the like count if not liked
+        }
+        liked = !liked; // Toggle the liked state
+
         item.querySelector('.like-count').textContent = media.likes;
         updateGlobalCounter(); // Update total likes counter
     });
